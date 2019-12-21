@@ -26,7 +26,7 @@ class AS_Data(Dataset):
         for filename in sorted(glob.glob(cfg['EM'])):
             print(filename+'   is loading')
             EM = np.load(filename)
-            EM = simplify_matrix(EM,1,l_EM)
+#             EM = simplify_matrix(EM,1,l_EM)
             tick,_,W,H = EM.shape
             self.EM.append(EM[int(left*tick):int(right*tick)])
         self.EM = np.concatenate(self.EM,axis = 0)
