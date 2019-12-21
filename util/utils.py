@@ -1,5 +1,11 @@
 import numpy as np
-from thop import profile
+
+# from thop import profile
+# #parameter counter 
+# def params_counter(model,*input):
+#     flops, params = profile(model, inputs=input)
+#     return flops,params
+
 
 def score(model,loader,criterion):
     model.eval()
@@ -20,10 +26,6 @@ def score(model,loader,criterion):
     return np.mean(np.array(ls))
 
 
-#parameter counter 
-def params_counter(model,*input):
-    flops, params = profile(model, inputs=input)
-    return flops,params
 
 
 def simplify_matrix(mat,axis,list_indices):
