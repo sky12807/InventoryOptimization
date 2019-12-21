@@ -16,6 +16,7 @@ class AS_Data(Dataset):
         self.EM = []
         self.METCRO2D = []
         self.METCRO3D = []
+        self.METCRO3D_5height = []
         self.grid = np.load(glob.glob(cfg['grid'])[0])
         self.label = []
     
@@ -26,7 +27,7 @@ class AS_Data(Dataset):
         for filename in sorted(glob.glob(cfg['EM'])):
             print(filename+'   is loading')
             EM = np.load(filename)
-            EM = simplify_matrix(EM,1,l_EM)
+#             EM = simplify_matrix(EM,1,l_EM)
             tick,_,W,H = EM.shape
             self.EM.append(EM[int(left*tick):int(right*tick)])
         self.EM = np.concatenate(self.EM,axis = 0)
@@ -48,6 +49,12 @@ class AS_Data(Dataset):
             self.METCRO3D.append(METCRO3D[int(left*tick):int(right*tick)])
         self.METCRO3D = np.concatenate(self.METCRO3D,axis = 0)
 
+        for filename in sorted(glob.glob(cfg['METCRO3D_5height'])):
+            print(filename+'   is loading')
+            METCRO3D_5height = np.load(filename)
+            tick,_,W,H = METCRO3D.shape
+            self.METCRO3D_5height.append(METCRO3D_5height[int(left*tick):int(right*tick)])
+        self.METCRO3D_5height = np.concatenate(self.METCRO3D_5height,axis = 0)
 
         for filename in sorted(glob.glob(cfg['label'])):
             print(filename+'   is loading')
@@ -67,11 +74,12 @@ class AS_Data(Dataset):
         em = self.EM[idx:cur]
         metcro2d = self.METCRO2D[idx:cur]
         metcro3d = self.METCRO3D[idx:cur]
+        metcro3d_5height = self.METCRO3D_5height[idx:cur]
 #         grid = np.repeat(self.grid, self.window, axis=0)
 #         grid = grid.reshape((self.window,-1,self.W,self.H))
         
         #metcro3d ,grid 
-        d = np.concatenate([em,metcro2d,metcro3d],axis = 1)
+        d = np.concatenate([em,metcro2d,metcro3d,metcro3d_5height],axis = 1)
         return d,self.grid,self.label[cur]
         
     def __len__(self):
