@@ -3,7 +3,7 @@
 import torch.nn.functional as F
 from torchvision.models.resnet import BasicBlock,conv1x1,conv3x3
 
-from .unet_parts import *
+from model.unet_parts import *
 
 
 class UNet(nn.Module):
@@ -19,10 +19,21 @@ class UNet(nn.Module):
             nn.Conv2d(32, 16, kernel_size=3, stride=1, padding=1,
                                bias=False),
             nn.ReLU(inplace=True),
-            nn.Conv2d(16, 16, kernel_size=3, stride=1, padding=1,
+            nn.Conv2d(16, 8, kernel_size=3, stride=1, padding=1,
                                bias=False),
                                )
         
+        
+        self.conv_y = nn.Sequential(
+            nn.Conv2d(1, 8, kernel_size=7, stride=1, padding=3,
+                               bias=False),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(8, 8, kernel_size=3, stride=1, padding=1,
+                               bias=False),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(8, 8, kernel_size=3, stride=1, padding=1,
+                               bias=False),
+                               )
         
         self.bn0 = norm_layer(n_channels)
         self.n_channels = n_channels
@@ -48,15 +59,19 @@ class UNet(nn.Module):
 #         self.up3 = Up(256, 64, bilinear)
         self.up3 = Up(256, 64, bilinear)
         self.up4 = Up(128, 64, bilinear)
-        self.outc = OutConv(64, 2)
+        self.outc = OutConv(64, 8)
                 
-        self.outt = nn.Sequential(nn.Linear(T*2+16,64),
+        self.outt = nn.Sequential(OutConv(T*8+8+8, 64), #(8+8+8,64),
                                 nn.ReLU(inplace=True),
-                                nn.Linear(64,1)
+                                OutConv(64,1)
                                )
         
         
-    def forward(self, x,grid):
+    def forward(self, x,grid,yt_1):
+        #x B*T*C*H*W
+        B,T,C,H,W = x.shape
+        
+        x = x.reshape(B*T,C,H,W)
         x = self.bn0(x)
         x1 = self.inc(x)
         x2 = self.down1(x1)
@@ -68,16 +83,23 @@ class UNet(nn.Module):
         x = self.up3(x3, x2)
         x = self.up4(x, x1)
         
-        logits = self.outc(x)
-        T,_,W,H = logits.shape
-        logits = logits.permute(2,3,0,1)
-        logits = logits.view(W,H,-1)
+        logits = self.outc(x) #B*T,_,H,W
+        logits = logits.reshape(B,-1,H,W)
+#         logits = logits.permute(2,3,0,1)
+#         logits = logits.view(W,H,-1)
         
+        #grid:B*27*H*W
         grid = self.conv_grid(grid)
-        grid = grid.permute(2,3,0,1)
-        grid = grid.view(W,H,-1)
+#         grid = grid.permute(2,3,0,1)
+#         grid = grid.view(W,H,-1)
         
-        logits = torch.cat([logits,grid],dim = -1)
+        #yt_1:B*1*H*W
+        yt_1 = self.conv_y(yt_1)
+#         yt_1 = yt_1.permute(2,3,0,1)
+#         yt_1 = yt_1.view(W,H,-1)
+        
+        
+        logits = torch.cat([logits,grid,yt_1],dim = 1)
         logits = self.outt(logits)
         return logits
     
@@ -126,7 +148,10 @@ class UNet_Res(nn.Module):
         self.up4 = Up(128, 64, bilinear)
         self.outc = OutConv(64, 1)
                 
-        self.outt = nn.Sequential(nn.Linear(T,1))
+        self.outt = nn.Sequential(OutConv(64, 1))
+        
+        
+#         nn.Linear(T,1))
 #                                   nn.ReLU(),
 #                                   nn.Linear(64,1))
         
@@ -147,7 +172,7 @@ class UNet_Res(nn.Module):
         
         logits = self.outc(x)
         T,_,W,H = logits.shape
-        logits = logits.permute(2,3,0,1)
+        logits = logits.permute(0,2,3,0)
         logits = logits.view(W,H,-1)
         
         grid = self.conv_grid(grid)

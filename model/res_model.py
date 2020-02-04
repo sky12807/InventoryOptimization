@@ -3,7 +3,7 @@ from torch import nn
 from torchvision.models.resnet import BasicBlock,conv1x1,conv3x3
 
 class res8(nn.Module):
-    def __init__(self,in_channels,grid_dim,layers,T=24,block=BasicBlock, num_classes=1,zero_init_residual=False,
+    def __init__(self,in_channels,grid_dim,inplanes=64,layers=[2],T=24,block=BasicBlock, num_classes=1,zero_init_residual=False,
                  groups=1, width_per_group=64, replace_stride_with_dilation=None,
                  norm_layer=None):
         super(res8,self).__init__()
@@ -13,16 +13,28 @@ class res8(nn.Module):
         
         self.conv_grid = nn.Sequential(
             norm_layer(grid_dim),
-            nn.Conv2d(grid_dim, 32, kernel_size=7, stride=1, padding=3,
+            nn.Conv2d(grid_dim, 32, kernel_size=3, stride=1, padding=1,
                                bias=False),
             nn.ReLU(inplace=True),
-            nn.Conv2d(32, 32, kernel_size=3, stride=1, padding=1,
+            nn.Conv2d(32, 16, kernel_size=3, stride=1, padding=1,
                                bias=False),
             nn.ReLU(inplace=True),
-            nn.Conv2d(32, 32, kernel_size=3, stride=1, padding=1,
+            nn.Conv2d(16, 8, kernel_size=3, stride=1, padding=1,
                                bias=False),
                                )
-        self.inplanes = 64
+        
+        self.conv_y = nn.Sequential(
+            nn.Conv2d(1, 8, kernel_size=7, stride=1, padding=3,
+                               bias=False),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(8, 8, kernel_size=3, stride=1, padding=1,
+                               bias=False),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(8, 8, kernel_size=3, stride=1, padding=1,
+                               bias=False)
+        )
+        
+        self.inplanes = inplanes
         self.dilation = 1
         self.groups = groups
         self.base_width = width_per_group
@@ -31,19 +43,25 @@ class res8(nn.Module):
                                bias=False)
         self.bn1 = norm_layer(self.inplanes)
         self.relu = nn.ReLU(inplace=True)
-        self.layer1 = self._make_layer(block, 64, layers[0])
+        self.layer1 = self._make_layer(block, self.inplanes, layers[0])
         
+        self.layer1_end = nn.Conv2d(self.inplanes, 8, kernel_size=1, stride=1)
 #         rnn_layer = 2
 #         self.rnn = nn.LSTM(64, 64, rnn_layer)
         
 #         self.conv_groups = nn.Conv2d(64*T, 64, kernel_size=1, stride=1, groups = 64,
 #                                bias=False)
         
-        self.fc = nn.Sequential(nn.Linear(64*T+32,128),
+        self.conv_fc = nn.Sequential(nn.Conv2d(24, 64, kernel_size=1, stride=1),
+                                     nn.ReLU(inplace=True),
+                                    nn.Conv2d(64, 1, kernel_size=1, stride=1))
+            
+        self.fc = nn.Sequential(nn.Linear(24,64),
                                 nn.ReLU(inplace=True),
-                                nn.Linear(128,1)
+                                nn.Linear(64,1)
                                )
-
+        
+        
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
                 nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
@@ -61,24 +79,26 @@ class res8(nn.Module):
                 elif isinstance(m, BasicBlock):
                     nn.init.constant_(m.bn2.weight, 0)
                     
-    def forward(self, x,grid):
+    def forward(self, x,grid,yt_1):
         x = self.bn0(x)
         x = self.conv1(x)
         x = self.bn1(x)
         x = self.relu(x)
 
         x = self.layer1(x)
-        
+        x = self.layer1_end(x)
 
         T,C,W,H = x.shape
-        x = x.permute(2,3,0,1)  # [T,C,W,H]  ->  [W,H,T,C]
-        x = x.view(W,H,-1)
+#         x = x.permute(2,3,0,1)  # [T,C,W,H]  ->  [W,H,T,C]
+#         x = x.view(W,H,-1)
         
         grid = self.conv_grid(grid)
-        grid = grid.permute(2,3,0,1)
-        grid = grid.view(W,H,-1)
+#         grid = grid.permute(2,3,0,1)
+#         grid = grid.view(W,H,-1)
         
-        x = torch.cat([x,grid],dim = 2)
+        yt_1 = self.conv_y(yt_1)
+        
+        x = torch.cat([x,grid,yt_1],dim = 1)
         
 #         x = x.permute(0,2,3,1)
 
@@ -88,7 +108,7 @@ class res8(nn.Module):
 #         hn = hn.permute(1,0,2).contiguous()
 #         hn = hn.view(W,H,-1)
 #         x = self.fc(hn)
-        x = self.fc(x)
+        x = self.conv_fc(x)
         return x
 
     def _make_layer(self, block, planes, blocks, stride=1, dilate=False):

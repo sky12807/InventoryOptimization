@@ -37,6 +37,14 @@ class AS_Data(Dataset):
         l_EM = [[0,2,3,4,8,9,10,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50],range(11,30),[6,7],[30,31],[1],[5]]        
         l_METCRO2D = [[0],[3],[5],[11],[12],[13],[14],[17],[18],[19],[20],[26]]
 
+        for filename in sorted(glob.glob(cfg['METCRO3D_5height'])):
+            print(filename+'   is loading')
+            METCRO3D_5height = np.load(filename)
+            tick,_,W,H = METCRO3D_5height.shape
+            self.METCRO3D_5height.append(METCRO3D_5height[int(left*tick):int(right*tick)].copy())
+            del METCRO3D_5height
+
+            
         for filename in sorted(glob.glob(cfg['EM'])):
             print(filename+'   is loading')
             EM = np.load(filename)
@@ -60,13 +68,7 @@ class AS_Data(Dataset):
             self.METCRO3D.append(METCRO3D[int(left*tick):int(right*tick)].copy())
             del METCRO3D
             
-        for filename in sorted(glob.glob(cfg['METCRO3D_5height'])):
-            print(filename+'   is loading')
-            METCRO3D_5height = np.load(filename)
-            tick,_,W,H = METCRO3D.shape
-            self.METCRO3D_5height.append(METCRO3D_5height[int(left*tick):int(right*tick)].copy())
-            del METCRO3D_5height
-
+        
         
     def __getitem__(self,idx):
         bucket_idx = bisect.bisect_right(self.bucket,idx)-1
@@ -83,7 +85,18 @@ class AS_Data(Dataset):
         
         #metcro3d ,grid 
         d = np.concatenate([em,metcro2d],axis = 1) #metcro3d metcro3d_5height
-        return d,self.grid,self.label[bucket_idx][cur]
+        
+#         mi = np.min(d,axis = (2,3),keepdims = True)
+#         ma = np.max(d,axis = (2,3),keepdims = True)
+#         m = (mi+ma)/2
+#         lower = d.copy()
+#         higher = d.copy()
+#         m = np.tile(m,[1,1,lower.shape[2],lower.shape[3]])
+#         lower[lower>=m] = m[lower>=m]
+#         higher[higher<=m] = m[higher<=m]
+#         d = np.concatenate([lower,higher],axis = 1)
+        
+        return d,self.grid,self.label[bucket_idx][cur-self.window],self.label[bucket_idx][cur]
         
     def __len__(self):
         return self.bucket[-1]-1
