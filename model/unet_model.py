@@ -4,7 +4,7 @@ import torch.nn.functional as F
 from torchvision.models.resnet import BasicBlock,conv1x1,conv3x3
 
 from model.unet_parts import *
-
+from model.layers import Attention
 
 class UNet(nn.Module):
     def __init__(self, n_channels,grid_dim, T, bilinear=True):
@@ -43,12 +43,20 @@ class UNet(nn.Module):
 #                 conv1x1(n_channels, planes * 1, stride=1),
 #                 norm_layer(planes * 1),
 #             )
-        self.inc = DoubleConv(n_channels, 64)
+
+        self.h0 = nn.Parameter(torch.randn(1,1,64))
+        self.c0 = nn.Parameter(torch.randn(1,1,64))
+        self.rnn = nn.LSTM(n_channels,64,num_layers=1,batch_first=True)
+        
+        self.inc = DoubleConv(64, 64)
 #         sel.inc = nn.Sequential(
 #             BasicBlock(n_channels, 64,downsample),
 #             BasicBlock(64, 64)
 #         )
         
+        
+        
+    
         self.down1 = Down(64, 128)
         self.down2 = Down(128, 128)
 #         self.down2 = Down(128, 256)
@@ -59,20 +67,35 @@ class UNet(nn.Module):
 #         self.up3 = Up(256, 64, bilinear)
         self.up3 = Up(256, 64, bilinear)
         self.up4 = Up(128, 64, bilinear)
-        self.outc = OutConv(64, 8)
+#         self.outc = OutConv(64, 8)
                 
-        self.outt = nn.Sequential(OutConv(T*8+8+8, 64), #(8+8+8,64),
+        self.outt = nn.Sequential(OutConv(64+8+8, 64), #(8+8+8,64),
                                 nn.ReLU(inplace=True),
                                 OutConv(64,1)
                                )
         
         
+        
+        
     def forward(self, x,grid,yt_1):
+        
         #x B*T*C*H*W
         B,T,C,H,W = x.shape
-        
         x = x.reshape(B*T,C,H,W)
         x = self.bn0(x)
+        x = x.reshape(B,T,C,H,W)
+        
+        x = x.permute(0,3,4,1,2) #x B*H*W*T*C
+        x = x.reshape(B*H*W,T,C)
+        h0 = self.h0.repeat(1,B*H*W,1)
+        c0 = self.c0.repeat(1,B*H*W,1)
+        _,(hn,cn) = self.rnn(x,(h0,c0)) #hn num_layers*(B*H*W)*rnn_hidden
+        
+        x = hn[-1]
+        x = x.reshape(B,H,W,-1)
+        x = x.permute(0,3,1,2)
+        x = x.reshape(B,-1,H,W)
+        
         x1 = self.inc(x)
         x2 = self.down1(x1)
         x3 = self.down2(x2)
@@ -83,8 +106,8 @@ class UNet(nn.Module):
         x = self.up3(x3, x2)
         x = self.up4(x, x1)
         
-        logits = self.outc(x) #B*T,_,H,W
-        logits = logits.reshape(B,-1,H,W)
+#         logits = self.outc(x) #B*T,_,H,W
+        logits = x.reshape(B,-1,H,W)
 #         logits = logits.permute(2,3,0,1)
 #         logits = logits.view(W,H,-1)
         
