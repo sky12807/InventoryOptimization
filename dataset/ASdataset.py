@@ -27,7 +27,7 @@ class AS_Data(Dataset):
             label = np.load(filename)
             tick,W,H = label.shape
             self.label.append(label[int(left*tick):int(right*tick)].copy())
-            self.bucket.append(self.bucket[-1]+int(right*tick)-int(left*tick)-window)
+            self.bucket.append(self.bucket[-1]+int(right*tick)-int(left*tick)-window+1)
             del label
             
         _,W,H = self.label[0].shape
@@ -99,4 +99,4 @@ class AS_Data(Dataset):
         return d,self.grid,self.label[bucket_idx][cur-self.window],self.label[bucket_idx][cur]
         
     def __len__(self):
-        return self.bucket[-1]-1
+        return self.bucket[-1]
