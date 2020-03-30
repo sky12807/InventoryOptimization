@@ -100,4 +100,4 @@ class AS_Data(Dataset):
         return d,self.grid,self.label[bucket_idx][cur-self.window],self.label[bucket_idx][cur-1]
         
     def __len__(self):
-        return self.bucket[-1]
+        return self.bucket[-1] - 1
