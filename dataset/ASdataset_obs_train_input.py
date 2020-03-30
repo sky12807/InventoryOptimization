@@ -60,7 +60,7 @@ class AS_Data_obs(AS_Data):
         
     
     def __len__(self):
-        return self.bucket[-1]
+        return self.bucket[-1] - 1
     
 def main():    
     cfg = {'EM':'/AS_data/Emis_npy/EM_2015_07*',
