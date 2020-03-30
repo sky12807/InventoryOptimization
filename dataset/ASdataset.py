@@ -95,8 +95,9 @@ class AS_Data(Dataset):
 #         lower[lower>=m] = m[lower>=m]
 #         higher[higher<=m] = m[higher<=m]
 #         d = np.concatenate([lower,higher],axis = 1)
-        
-        return d,self.grid,self.label[bucket_idx][cur-self.window],self.label[bucket_idx][cur]
+
+        #### model re-train
+        return d,self.grid,self.label[bucket_idx][cur-self.window],self.label[bucket_idx][cur-1]
         
     def __len__(self):
         return self.bucket[-1]
