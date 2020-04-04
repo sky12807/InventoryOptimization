@@ -43,8 +43,9 @@ class AS_Data_obs(AS_Data):
         
         #metcro3d ,grid 
         d = np.concatenate([em,metcro2d],axis = 1) #metcro3d metcro3d_5height
-   
-        return index,d,self.grid,self.label[bucket_idx][cur-self.window],self.label[bucket_idx][cur],self.obs_label[bucket_idx][cur]
+           
+        ### please pay attention!!!! use [0:6] feature , we should forecast current res , current time stamp is 6-1 
+        return index,d,self.grid,self.label[bucket_idx][cur-self.window],self.label[bucket_idx][cur-1],self.obs_label[bucket_idx][cur-1].astype(np.float32)
         
     
     def update(self,indexes,ds):
