@@ -1,6 +1,13 @@
 import torch 
 from torch import nn
+import glob
+import numpy as np
+import codecs
 
+import matplotlib
+import matplotlib.pyplot as plt
+
+%matplotlib inline
 from thop import profile
 #parameter counter 
 def params_counter(model,*input):
@@ -14,18 +21,12 @@ with codecs.open("DATA/monitorij_cn27_prov.txt",'r',"utf-8") as f:
         station2idx[line[0]]=(int(line[-2]),int(line[-1]))
         
         
-import glob
-import numpy as np
-import codecs
 
-import matplotlib
-import matplotlib.pyplot as plt
 
-%matplotlib inline
-
+shift_Greenwich = 8
 month = 10
 for month,hours in [[1,744],[2,672],[4,720],[7,744],[10,744]]:
-    obs_label = -999*np.ones((hours,6,182,232))
+    obs_label = -999*np.ones((hours+shift_Greenwich,6,182,232))
     
     for filename in glob.glob('DATA/obs2015_{}/*.txt'.format(month)):
         #print(filename)
@@ -39,6 +40,7 @@ for month,hours in [[1,744],[2,672],[4,720],[7,744],[10,744]]:
                 cur = [float(k) for k in line.split()[1:]]
                 obs_label[idx,:,station2idx[station][1],station2idx[station][0]] = [cur[j] if cur[j]!=-999 else his[j] for j in range(len(cur))]
     
+    obs_label = obs_label[shift_Greenwich:]
     print('DATA/obs2015_{}_{}'.format( month,'_'.join([str(i) for i in obs_label.shape])))
     np.save('DATA/obs2015_{}_{}'.format( month,'_'.join([str(i) for i in obs_label.shape])),obs_label) 
     

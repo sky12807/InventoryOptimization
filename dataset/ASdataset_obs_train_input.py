@@ -17,6 +17,7 @@ class AS_Data_obs(AS_Data):
         self.W,self.H = W,H
         
         self.obs_label = []
+        self.finetune_label = []
         ####"NO2","SO2","O3","PM2.5","PM10","CO"  need to set
         self.obs_label_idx = 2 if 'O3' in cfg['label'] else 3
         for filename in sorted(glob.glob(cfg['obs_label'])):
@@ -24,6 +25,7 @@ class AS_Data_obs(AS_Data):
             obs_label = np.load(filename)
             tick,_,W,H = obs_label.shape
             self.obs_label.append(obs_label[int(left*tick):int(right*tick),self.obs_label_idx].copy())
+            self.finetune_label.append(obs_label[int(left*tick):int(right*tick),self.obs_label_idx].copy())
             del obs_label
         
     def __getitem__(self,index):
@@ -56,9 +58,14 @@ class AS_Data_obs(AS_Data):
             
             ###update your input
             self.EM[bucket_idx][idx:cur] = ds[i][:,:51].cpu().numpy()
-            self.METCRO2D[bucket_idx][idx:cur] = ds[i][:,51:].cpu().numpy()
+#             self.METCRO2D[bucket_idx][idx:cur] = ds[i][:,51:].cpu().numpy()
             
-        
+    def update_labels(self,indexes,labels):
+        for i,idx in enumerate(indexes):            
+            bucket_idx = bisect.bisect_right(self.bucket,idx)-1
+            idx -= self.bucket[bucket_idx]
+            cur = idx+self.window
+            self.finetune_label[bucket_idx][cur-1] = labels[i].cpu().detach().numpy()
     
     def __len__(self):
         return self.bucket[-1] - 1
