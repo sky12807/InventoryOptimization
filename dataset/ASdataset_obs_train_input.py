@@ -57,7 +57,8 @@ class AS_Data_obs(AS_Data):
             cur = idx+self.window
             
             ###update your input
-            self.EM[bucket_idx][idx:cur] = ds[i][:,:51].cpu().numpy()
+            cur_inventory = ds[i][:,:51].cpu().numpy()
+            self.EM[bucket_idx][idx:cur][cur_inventory>0] = cur_inventory[cur_inventory>0]
 #             self.METCRO2D[bucket_idx][idx:cur] = ds[i][:,51:].cpu().numpy()
             
     def update_labels(self,indexes,labels):
@@ -65,7 +66,10 @@ class AS_Data_obs(AS_Data):
             bucket_idx = bisect.bisect_right(self.bucket,idx)-1
             idx -= self.bucket[bucket_idx]
             cur = idx+self.window
-            self.finetune_label[bucket_idx][cur-1] = labels[i].cpu().detach().numpy()
+            
+            ###### label can't be negative!!!!!
+            cur_label = labels[i].cpu().detach().numpy()
+            self.finetune_label[bucket_idx][cur-1][cur_label>0] = cur_label[cur_label>0]
     
     def __len__(self):
         return self.bucket[-1] - 1
