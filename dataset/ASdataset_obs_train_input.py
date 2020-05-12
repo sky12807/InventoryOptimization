@@ -64,7 +64,10 @@ class AS_Data_obs(AS_Data):
             ###update your input
             cur_inventory = ds[i][:,self.EM_idx].cpu().numpy()
             
-            self.EM[bucket_idx][idx:cur,self.EM_idx][cur_inventory>0] = cur_inventory[cur_inventory>0]
+            self.EM[bucket_idx][idx:cur,self.EM_idx] = cur_inventory
+            ### the input of inventory must be positive!!!!!
+            self.EM[bucket_idx][idx:cur] = np.clip(self.EM[bucket_idx][idx:cur],a_min = 0,a_max = None)
+
 #             self.METCRO2D[bucket_idx][idx:cur] = ds[i][:,51:].cpu().numpy()
             
     def update_labels(self,indexes,labels):
