@@ -10,7 +10,7 @@ from util import simplify_matrix
 from dataset.ASdataset import AS_Data
 
 class AS_Data_obs(AS_Data):
-    def __init__(self,cfg,left = 0,right = 1,window=24):
+    def __init__(self,cfg,left = 0,right = 1,window=24,EM_idx = np.arange(51)):
         super(AS_Data_obs,self).__init__(cfg,left,right,window)
         
         _,W,H = self.label[0].shape
@@ -24,9 +24,12 @@ class AS_Data_obs(AS_Data):
             print(filename+'   is loading')
             obs_label = np.load(filename)
             tick,_,W,H = obs_label.shape
-            self.obs_label.append(obs_label[int(left*tick):int(right*tick),self.obs_label_idx].copy())
-            self.finetune_label.append(obs_label[int(left*tick):int(right*tick),self.obs_label_idx].copy())
+            self.obs_label.append(obs_label[int(left*tick):int(right*tick),self.obs_label_idx].astype(np.float32).copy())
+            self.finetune_label.append(obs_label[int(left*tick):int(right*tick),self.obs_label_idx].astype(np.float32).copy())
             del obs_label
+        
+        
+        self.EM_idx = EM_idx
         
     def __getitem__(self,index):
         
@@ -47,7 +50,9 @@ class AS_Data_obs(AS_Data):
         d = np.concatenate([em,metcro2d],axis = 1) #metcro3d metcro3d_5height
            
         ### please pay attention!!!! use [0:6] feature , we should forecast current res , current time stamp is 6-1 
-        return index,d,self.grid,self.label[bucket_idx][cur-self.window],self.label[bucket_idx][cur-1],self.obs_label[bucket_idx][cur-1].astype(np.float32)
+        ## output: T*dim*182*232
+        return index,d,self.grid,self.label[bucket_idx][cur-self.window],self.label[bucket_idx][cur-1],self.obs_label[bucket_idx][cur-1]
+        
         
     
     def update(self,indexes,ds):
@@ -57,8 +62,9 @@ class AS_Data_obs(AS_Data):
             cur = idx+self.window
             
             ###update your input
-            cur_inventory = ds[i][:,:51].cpu().numpy()
-            self.EM[bucket_idx][idx:cur][cur_inventory>0] = cur_inventory[cur_inventory>0]
+            cur_inventory = ds[i][:,self.EM_idx].cpu().numpy()
+            
+            self.EM[bucket_idx][idx:cur,self.EM_idx][cur_inventory>0] = cur_inventory[cur_inventory>0]
 #             self.METCRO2D[bucket_idx][idx:cur] = ds[i][:,51:].cpu().numpy()
             
     def update_labels(self,indexes,labels):

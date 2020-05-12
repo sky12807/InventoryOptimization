@@ -26,7 +26,7 @@ class AS_Data(Dataset):
             print(filename+'   is loading')
             label = np.load(filename)
             tick,W,H = label.shape
-            self.label.append(label[int(left*tick):int(right*tick)].copy())
+            self.label.append(label[int(left*tick):int(right*tick)].astype(np.float32).copy())
             self.bucket.append(self.bucket[-1]+int(right*tick)-int(left*tick)-window+1)
             del label
             
@@ -41,7 +41,7 @@ class AS_Data(Dataset):
             print(filename+'   is loading')
             METCRO3D_5height = np.load(filename)
             tick,_,W,H = METCRO3D_5height.shape
-            self.METCRO3D_5height.append(METCRO3D_5height[int(left*tick):int(right*tick)].copy())
+            self.METCRO3D_5height.append(METCRO3D_5height[int(left*tick):int(right*tick)].astype(np.float32).copy())
             del METCRO3D_5height
 
             
@@ -50,7 +50,7 @@ class AS_Data(Dataset):
             EM = np.load(filename)
 #             EM = simplify_matrix(EM,1,l_EM)
             tick,_,W,H = EM.shape
-            self.EM.append(EM[int(left*tick):int(right*tick)].copy())
+            self.EM.append(EM[int(left*tick):int(right*tick)].astype(np.float32).copy())
             del EM
             
         for filename in sorted(glob.glob(cfg['METCRO2D'])):
@@ -58,14 +58,14 @@ class AS_Data(Dataset):
             METCRO2D = np.load(filename)
 #             METCRO2D = simplify_matrix(METCRO2D,1,l_METCRO2D)
             tick,_,W,H = METCRO2D.shape
-            self.METCRO2D.append(METCRO2D[int(left*tick):int(right*tick)].copy())
+            self.METCRO2D.append(METCRO2D[int(left*tick):int(right*tick)].astype(np.float32).copy())
             del METCRO2D
             
         for filename in sorted(glob.glob(cfg['METCRO3D'])):
             print(filename+'   is loading')
             METCRO3D = np.load(filename)
             tick,_,W,H = METCRO3D.shape
-            self.METCRO3D.append(METCRO3D[int(left*tick):int(right*tick)].copy())
+            self.METCRO3D.append(METCRO3D[int(left*tick):int(right*tick)].astype(np.float32).copy())
             del METCRO3D
             
         
