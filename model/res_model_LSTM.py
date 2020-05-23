@@ -45,8 +45,8 @@ class res8(nn.Module):
         self.conv1 = nn.Conv2d(in_channels, self.inplanes, kernel_size=7, stride=1, padding=3,
                                bias=False)
         
-        self.h0 = nn.Parameter(torch.randn(1,1,64))
-        self.c0 = nn.Parameter(torch.randn(1,1,64))
+        self.h0 = nn.Parameter(torch.randn(1,1,self.inplanes))
+        self.c0 = nn.Parameter(torch.randn(1,1,self.inplanes))
         self.rnn = nn.LSTM(self.inplanes,self.inplanes,num_layers=1,batch_first=True)
         
         
@@ -60,9 +60,9 @@ class res8(nn.Module):
                                         nn.ReLU(inplace=True)
                                        )
         
-        self.conv_fc = nn.Sequential(nn.Conv2d(grid_output+em_dim+conv_y_output, 64, kernel_size=1, stride=1),
+        self.conv_fc = nn.Sequential(nn.Conv2d(grid_output+em_dim+conv_y_output, 64, kernel_size=1),
                                      nn.ReLU(inplace=True),
-                                    nn.Conv2d(64, pre_dim, kernel_size=1, stride=1))
+                                    nn.Conv2d(64, pre_dim, kernel_size=1))
         
         
         for m in self.modules():
@@ -92,9 +92,9 @@ class res8(nn.Module):
         x = self.conv1(x)
         
         ## rnn forward
-        x = x.reshape(B,T,C,H,W) #B*C1*H*W
+        x = x.reshape(B,T,-1,H,W) #B*C1*H*W
         x = x.permute(0,3,4,1,2) #x B*H*W*T*C
-        x = x.reshape(B*H*W,T,C)
+        x = x.reshape(B*H*W,T,-1)
         h0 = self.h0.repeat(1,B*H*W,1)
         c0 = self.c0.repeat(1,B*H*W,1)
         _,(hn,cn) = self.rnn(x,(h0,c0)) #hn num_layers*(B*H*W)*rnn_hidden
@@ -162,10 +162,10 @@ class res8(nn.Module):
     
 def test():
     B,T,C,H,W = 3,8,70,100,200
-    model=res8(70,27,inplanes=64,layers=[2],T=T)
+    model=res8(70,27,inplanes=64,layers=[2],T=T,pre_dim=2)
     x = torch.randn(B,T,C,H,W)
     grid = torch.randn(B,27,H,W)
-    yt_1 = None
+    yt_1 = torch.randn(B,2,H,W)
     
     output = model(x,grid,yt_1)
     print(output.shape)
