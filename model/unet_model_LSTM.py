@@ -44,9 +44,10 @@ class UNet(nn.Module):
 #                 norm_layer(planes * 1),
 #             )
 
+        self.h0 = nn.Parameter(torch.randn(1,1,64))
+        self.c0 = nn.Parameter(torch.randn(1,1,64))
+        self.rnn = nn.LSTM(n_channels,64,num_layers=1,batch_first=True)
         
-        self.conv_temporal = nn.Conv2d(n_channels*T, 64, kernel_size=1, stride=1,bias=True)
-
         self.inc = DoubleConv(64, 64)
 #         sel.inc = nn.Sequential(
 #             BasicBlock(n_channels, 64,downsample),
@@ -83,10 +84,17 @@ class UNet(nn.Module):
         x = x.reshape(B*T,C,H,W)
         x = self.bn0(x)
         x = x.reshape(B,T,C,H,W)
-
-        x = x.reshape(B,T*C,H,W)
-        x = self.conv_temporal(x)
         
+        x = x.permute(0,3,4,1,2) #x B*H*W*T*C
+        x = x.reshape(B*H*W,T,C)
+        h0 = self.h0.repeat(1,B*H*W,1)
+        c0 = self.c0.repeat(1,B*H*W,1)
+        _,(hn,cn) = self.rnn(x,(h0,c0)) #hn num_layers*(B*H*W)*rnn_hidden
+        
+        x = hn[-1]
+        x = x.reshape(B,H,W,-1)
+        x = x.permute(0,3,1,2)
+        x = x.reshape(B,-1,H,W)
         
         x1 = self.inc(x)
         x2 = self.down1(x1)
