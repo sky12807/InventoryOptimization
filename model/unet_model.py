@@ -7,7 +7,7 @@ from model.unet_parts import *
 from model.layers import Attention
 
 class UNet(nn.Module):
-    def __init__(self, n_channels,grid_dim, T, bilinear=True):
+    def __init__(self, n_channels,grid_dim, T, pre_dim = 1,bilinear=True):
         super(UNet, self).__init__()
         
         norm_layer = nn.BatchNorm2d
@@ -25,7 +25,7 @@ class UNet(nn.Module):
         
         
         self.conv_y = nn.Sequential(
-            nn.Conv2d(1, 8, kernel_size=7, stride=1, padding=3,
+            nn.Conv2d(pre_dim, 8, kernel_size=7, stride=1, padding=3,
                                bias=False),
             nn.ReLU(inplace=True),
             nn.Conv2d(8, 8, kernel_size=3, stride=1, padding=1,
@@ -71,7 +71,7 @@ class UNet(nn.Module):
                 
         self.outt = nn.Sequential(OutConv(64+8+8, 64), #(8+8+8,64),
                                 nn.ReLU(inplace=True),
-                                OutConv(64,1)
+                                OutConv(64,pre_dim)
                                )
         
         

@@ -3,7 +3,8 @@ from torch import nn
 from torchvision.models.resnet import BasicBlock,conv1x1,conv3x3
 
 class res8(nn.Module):
-    def __init__(self,in_channels,grid_dim,inplanes=64,layers=[2],T=24,block=BasicBlock,zero_init_residual=False,
+    def __init__(self,in_channels,grid_dim,inplanes=64,layers=[2],T=24,pre_dim = 1,
+                 block=BasicBlock,zero_init_residual=False,
                  groups=1, width_per_group=64, replace_stride_with_dilation=None,
                  norm_layer=None):
         super(res8,self).__init__()
@@ -20,20 +21,21 @@ class res8(nn.Module):
             nn.Conv2d(32, 16, kernel_size=3, stride=1, padding=1,
                                bias=False),
             nn.ReLU(inplace=True),
-            nn.Conv2d(16, 16, kernel_size=3, stride=1, padding=1,
+            nn.Conv2d(16, grid_output, kernel_size=3, stride=1, padding=1,
                                bias=False),
                                )
         
-#         self.conv_y = nn.Sequential(
-#             nn.Conv2d(1, 8, kernel_size=7, stride=1, padding=3,
-#                                bias=False),
-#             nn.ReLU(inplace=True),
-#             nn.Conv2d(8, 8, kernel_size=3, stride=1, padding=1,
-#                                bias=False),
-#             nn.ReLU(inplace=True),
-#             nn.Conv2d(8, 8, kernel_size=3, stride=1, padding=1,
-#                                bias=False)
-#         )
+        conv_y_output = 8
+        self.conv_y = nn.Sequential(
+            nn.Conv2d(pre_dim, 8, kernel_size=7, stride=1, padding=3,
+                               bias=False),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(8, 8, kernel_size=3, stride=1, padding=1,
+                               bias=False),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(8, conv_y_output, kernel_size=3, stride=1, padding=1,
+                               bias=False)
+        )
         
         self.inplanes = inplanes
         self.dilation = 1
@@ -54,9 +56,9 @@ class res8(nn.Module):
                                         nn.ReLU(inplace=True)
                                        )
         
-        self.conv_fc = nn.Sequential(nn.Conv2d(grid_output+em_dim, 64, kernel_size=1, stride=1),
+        self.conv_fc = nn.Sequential(nn.Conv2d(grid_output+em_dim+conv_y_output, 64, kernel_size=1, stride=1),
                                      nn.ReLU(inplace=True),
-                                    nn.Conv2d(64, 1, kernel_size=1, stride=1))
+                                    nn.Conv2d(64, pre_dim, kernel_size=1, stride=1))
         
         
         for m in self.modules():
@@ -102,9 +104,9 @@ class res8(nn.Module):
 #         grid = grid.permute(2,3,0,1)
 #         grid = grid.view(W,H,-1)
         
-#         yt_1 = self.conv_y(yt_1)
+        yt_1 = self.conv_y(yt_1)
         
-        x = torch.cat([x,grid],dim = 1)
+        x = torch.cat([x,grid,yt_1],dim = 1)
         
 #         x = x.permute(0,2,3,1)
 

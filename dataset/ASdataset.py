@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader,Dataset
 from util import simplify_matrix
 
 class AS_Data(Dataset):
-    def __init__(self,cfg,left = 0,right = 1,window=24):
+    def __init__(self,cfg,left = 0,right = 1,window=24,pollution = ['PM25','O3']):
         super(AS_Data,self).__init__()
         
         
@@ -22,15 +22,19 @@ class AS_Data(Dataset):
         self.grid = np.load(glob.glob(cfg['grid'])[0])
         self.label = []
         
+        
+        self.pollution_idx_dic = {"NO2":0,"SO2":1,"O3":2,"PM25":3,"PM10":4,"CO":5}
+        self.pollution_idx = np.array([self.pollution_idx_dic[i] for i in pollution])
+        
         for filename in sorted(glob.glob(cfg['label'])):
             print(filename+'   is loading')
             label = np.load(filename)
-            tick,W,H = label.shape
-            self.label.append(label[int(left*tick):int(right*tick)].astype(np.float32).copy())
+            tick = label.shape[0]
+            self.label.append(label[int(left*tick):int(right*tick),self.pollution_idx].astype(np.float32).copy())
             self.bucket.append(self.bucket[-1]+int(right*tick)-int(left*tick)-window+1)
             del label
             
-        _,W,H = self.label[0].shape
+        _,_,W,H = self.label[0].shape
         self.W,self.H = W,H
         
         
