@@ -23,7 +23,6 @@ class UNet(nn.Module):
                                bias=False),
                                )
         
-        
         self.conv_y = nn.Sequential(
             nn.Conv2d(pre_dim, 8, kernel_size=7, stride=1, padding=3,
                                bias=False),
@@ -34,6 +33,7 @@ class UNet(nn.Module):
             nn.Conv2d(8, 8, kernel_size=3, stride=1, padding=1,
                                bias=False),
                                )
+        
         
         self.bn0 = norm_layer(n_channels)
         self.n_channels = n_channels
@@ -68,11 +68,16 @@ class UNet(nn.Module):
         self.up3 = Up(256, 64, bilinear)
         self.up4 = Up(128, 64, bilinear)
 #         self.outc = OutConv(64, 8)
-                
-        self.outt = nn.Sequential(OutConv(64+8+8, 64), #(8+8+8,64),
-                                nn.ReLU(inplace=True),
-                                OutConv(64,pre_dim)
-                               )
+
+        
+        
+        self.out_conv_s = nn.ModuleList()
+        self.pre_dim = pre_dim
+        for _ in range(pre_dim):
+            self.out_conv_s.append(nn.Sequential(nn.Conv2d(64+8+8, 64, kernel_size=1), #(8+8+8,64),
+                                                nn.ReLU(inplace=True),
+                                                nn.Conv2d(64, 1, kernel_size=1))
+                                  )
         
         
         
@@ -116,15 +121,16 @@ class UNet(nn.Module):
 #         grid = grid.permute(2,3,0,1)
 #         grid = grid.view(W,H,-1)
         
-        #yt_1:B*1*H*W
         yt_1 = self.conv_y(yt_1)
-#         yt_1 = yt_1.permute(2,3,0,1)
-#         yt_1 = yt_1.view(W,H,-1)
-        
-        
+        #yt_1:B*pre_dim*H*W        
         logits = torch.cat([logits,grid,yt_1],dim = 1)
-        logits = self.outt(logits)
-        return logits
+        
+        out = []
+        for air in range(self.pre_dim):
+            out.append(self.out_conv_s[air](logits))
+            
+        out = torch.cat(out,dim = 1)
+        return out
     
     
     
