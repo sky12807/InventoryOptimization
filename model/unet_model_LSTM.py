@@ -15,22 +15,11 @@ class UNet(nn.Module):
             norm_layer(grid_dim),
             nn.Conv2d(grid_dim, 32, kernel_size=7, stride=1, padding=3,
                                bias=False),
-            nn.ReLU(inplace=True),
+            nn.LeakyReLU(),
             nn.Conv2d(32, 16, kernel_size=3, stride=1, padding=1,
                                bias=False),
-            nn.ReLU(inplace=True),
+            nn.LeakyReLU(),
             nn.Conv2d(16, 8, kernel_size=3, stride=1, padding=1,
-                               bias=False),
-                               )
-        
-        self.conv_y = nn.Sequential(
-            nn.Conv2d(pre_dim, 8, kernel_size=7, stride=1, padding=3,
-                               bias=False),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(8, 8, kernel_size=3, stride=1, padding=1,
-                               bias=False),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(8, 8, kernel_size=3, stride=1, padding=1,
                                bias=False),
                                )
         
@@ -70,12 +59,24 @@ class UNet(nn.Module):
 #         self.outc = OutConv(64, 8)
 
         
-        
+        self.conv_y_s = nn.ModuleList()
         self.out_conv_s = nn.ModuleList()
         self.pre_dim = pre_dim
         for _ in range(pre_dim):
+            self.conv_y_s.append(nn.Sequential(
+                                nn.Conv2d(1, 8, kernel_size=7, stride=1, padding=3,
+                                                   bias=False),
+                                nn.LeakyReLU(),
+                                nn.Conv2d(8, 8, kernel_size=3, stride=1, padding=1,
+                                                   bias=False),
+                                nn.LeakyReLU(),
+                                nn.Conv2d(8, 8, kernel_size=3, stride=1, padding=1,
+                                                   bias=False),
+                                                   )
+                        )
+            
             self.out_conv_s.append(nn.Sequential(nn.Conv2d(64+8+8, 64, kernel_size=1), #(8+8+8,64),
-                                                nn.ReLU(inplace=True),
+                                                nn.LeakyReLU(),
                                                 nn.Conv2d(64, 1, kernel_size=1))
                                   )
         
@@ -121,13 +122,14 @@ class UNet(nn.Module):
 #         grid = grid.permute(2,3,0,1)
 #         grid = grid.view(W,H,-1)
         
-        yt_1 = self.conv_y(yt_1)
+        
         #yt_1:B*pre_dim*H*W        
-        logits = torch.cat([logits,grid,yt_1],dim = 1)
+        logits = torch.cat([logits,grid],dim = 1)
         
         out = []
         for air in range(self.pre_dim):
-            out.append(self.out_conv_s[air](logits))
+            yt_1_now = self.conv_y_s[air](yt_1[:,air:air+1])
+            out.append(self.out_conv_s[air](torch.cat([logits,yt_1_now],dim = 1)))
             
         out = torch.cat(out,dim = 1)
         return out
