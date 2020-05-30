@@ -10,20 +10,18 @@ from util import simplify_matrix
 from dataset.ASdataset import AS_Data
 
 class AS_Data_obs(AS_Data):
-    def __init__(self,cfg,left = 0,right = 1,window=24,EM_idx = np.arange(51)):
-        super(AS_Data_obs,self).__init__(cfg,left,right,window)
-        
-        _,W,H = self.label[0].shape
-        self.W,self.H = W,H
+    def __init__(self,cfg,left = 0,right = 1,window=24,EM_idx = np.arange(51),pollution = ['PM25','O3']):
+        super(AS_Data_obs,self).__init__(cfg,left,right,window,pollution)
         
         self.obs_label = []
         self.finetune_label = []
+        
         ####"NO2","SO2","O3","PM2.5","PM10","CO"  need to set
-        self.obs_label_idx = 2 if 'O3' in cfg['label'] else 3
+        self.obs_label_idx = self.pollution_idx #2 if 'O3' in cfg['label'] else 3
         for filename in sorted(glob.glob(cfg['obs_label'])):
             print(filename+'   is loading')
             obs_label = np.load(filename)
-            tick,_,W,H = obs_label.shape
+            tick = obs_label.shape[0]
             self.obs_label.append(obs_label[int(left*tick):int(right*tick),self.obs_label_idx].astype(np.float32).copy())
             self.finetune_label.append(obs_label[int(left*tick):int(right*tick),self.obs_label_idx].astype(np.float32).copy())
             del obs_label
