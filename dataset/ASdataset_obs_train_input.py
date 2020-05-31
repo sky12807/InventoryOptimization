@@ -26,7 +26,6 @@ class AS_Data_obs(AS_Data):
             self.finetune_label.append(obs_label[int(left*tick):int(right*tick),self.obs_label_idx].astype(np.float32).copy())
             del obs_label
         
-        
         self.EM_idx = EM_idx
         
     def __getitem__(self,index):
@@ -41,8 +40,6 @@ class AS_Data_obs(AS_Data):
 #         metcro3d = self.METCRO3D[bucket_idx][idx:cur]
 #         metcro3d_5height = self.METCRO3D_5height[bucket_idx][idx:cur]
         
-        grid = np.repeat(self.grid, self.window, axis=0)
-        grid = grid.reshape((self.window,-1,self.W,self.H))
         
         #metcro3d ,grid 
         d = np.concatenate([em,metcro2d],axis = 1) #metcro3d metcro3d_5height
