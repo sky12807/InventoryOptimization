@@ -22,12 +22,15 @@ class AS_Data_obs(AS_Data):
         for filename in sorted(glob.glob(cfg['obs_label'])):
             print(filename+'   is loading')
             obs_label = np.load(filename)
+            temp = obs_label.copy()
             ####TRANSPOSE NO2  SO2 O3 CO ppb  ->  ugm3
-            obs_labelobs_label[:,0] = obs_label[:,0] * 22.4/46
+            obs_label[:,0] = obs_label[:,0] * 22.4/46
             obs_label[:,1] = obs_label[:,1] * 22.4/64
             obs_label[:,2] = obs_label[:,2] * 22.4/48
             obs_label[:,5] = obs_label[:,5] * 22.4/28
-
+            #bug fix about no observation!!!!!
+            obs_label[temp==-999] = -999
+            
             tick = obs_label.shape[0]
             self.obs_label.append(obs_label[int(left*tick):int(right*tick),self.obs_label_idx].astype(np.float32).copy())
             self.finetune_label.append(obs_label[int(left*tick):int(right*tick),self.obs_label_idx].astype(np.float32).copy())
