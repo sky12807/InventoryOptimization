@@ -22,7 +22,7 @@ class AS_Data(Dataset):
         self.grid = np.load(glob.glob(cfg['grid'])[0])
         self.label = []
         
-        
+        self.pollution = pollution
         self.pollution_idx_dic = {"NO2":0,"SO2":1,"O3":2,"PM25":3,"PM10":4,"CO":5}
         self.pollution_idx = np.array([self.pollution_idx_dic[i] for i in pollution])
         
