@@ -1,6 +1,6 @@
 share_cfg:
   data_path:
-    EM: '/AS_data/Emis_with_foreign_npy/EM_2015_01*'
+    EM: '/AS_data/concat_data/rest_EM_2015_01*'
     label: '/AS_data/Conc_npy/TOTAL_2015_01*'
     grid: '/AS_data/Grid_npy/grid_27_182_232.npy'
     METCRO2D: '/AS_data/METCRO2D_npy/METCRO2D_2015_01*'
@@ -9,7 +9,7 @@ share_cfg:
     obs_label: '/AS_data/obs_npy/obs2015_01_*'
   T: 24
   pollution: ['PM25','O3','NO2','SO2']
-  emission_dim: 51
+  emission_dim: 8
   meteorological_dim: 34
   grid_dim: 27
   name: 'model_save/unet_LSTM_ALL_prelu_PM25_O3_NO2_SO2_best_epoch.t'
