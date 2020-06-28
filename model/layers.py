@@ -2,6 +2,18 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 
+
+class Tensor_Parameter(nn.Module):
+    def __init__(self,):
+        super(Tensor_Parameter,self).__init__()
+        self.Input = nn.Parameter(torch.zeros(1))
+    
+    def forward(self,x):
+        self.Input.data = x
+        return self.Input
+
+    
+
 class Attention(nn.Module):
     def __init__(self, in_features,**kwargs):
         super(Attention, self).__init__()
