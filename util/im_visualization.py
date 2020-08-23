@@ -15,7 +15,7 @@ def remove_white_edge(fig,height,width):
     
 
     
-def image_show(out,china_path):
+def image_show(out,china_path,china_pixel):
     '''
     out: k*182*232, wrong rate, k means PM25,O3,No2,So2
     china_path: china map
@@ -23,13 +23,16 @@ def image_show(out,china_path):
 
     size = (232*4,182*4)
 
-    china = np.array(Image.open(china_path).resize(size))
-
-
+    c = np.array(Image.open(china_path).resize(size))
+    china_pixel = np.load(china_pixel)
+    
     for i in range(out.shape[0]):
+        china = c.copy()
+        
         fig, ax = plt.subplots()
         #out is wrong rate, 由于大部分的误差处在-100%~100%之间，所以设置了简单的clip，方便展示
-        ax.imshow(out[i][::-1],vmin=-1, vmax=1, cmap='bwr',aspect='equal')
+        only_china = out[i]*china_pixel
+        ax.imshow(only_china[::-1],vmin=-1, vmax=1, cmap='bwr',aspect='equal')
         plt.axis('off')
         height, width = out[i].shape
         remove_white_edge(fig,height,width)
@@ -41,10 +44,13 @@ def image_show(out,china_path):
         wrong_rate = np.array(Image.open('result.png').resize(size,Image.NEAREST))
 
         plt.figure(figsize=(18*0.7,23*0.7))
-
-        cur = wrong_rate[:,:,:3]+china
-
-        cur[0:4] = 254
+        
+        sign = china>=254
+        sign = sign[:,:,0]*sign[:,:,1]*sign[:,:,2]
+        china[sign] = wrong_rate[:,:,:3][sign]
+#         cur = wrong_rate[:,:,:3]+china
+        cur = china
+        cur[0:2] = 254
 
         plt.imshow(cur)
         plt.show()
