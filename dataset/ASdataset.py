@@ -48,23 +48,58 @@ class AS_Data(Dataset):
             tick,_,W,H = METCRO3D_5height.shape
             self.METCRO3D_5height.append(METCRO3D_5height[int(left*tick):int(right*tick)].astype(np.float32).copy())
             del METCRO3D_5height
-
-            
+    
+        EM_list = []
         for filename in sorted(glob.glob(cfg['EM'])):
             print(filename+'   is loading')
             EM = np.load(filename)
 #             EM = simplify_matrix(EM,1,l_EM)
             tick,_,W,H = EM.shape
-            self.EM.append(EM[int(left*tick):int(right*tick)].astype(np.float32).copy())
+            EM_list.append(EM[int(left*tick):int(right*tick)].astype(np.float32).copy())
             del EM
-            
+        # Normalize
+        all_em = np.concatenate(EM_list,axis=0)
+        _,dim,_,_ = all_em.shape
+        norm_data = []
+        for i in range(dim):
+            part_em = all_em[:,i:i+1,:,:]
+            norm_part = (part_em - np.mean(part_em))/(np.std(part_em,ddof=10))
+            norm_data.append(norm_part)
+        norm = np.concatenate(norm_data, axis=1)
+        del all_em
+        del norm_data
+        for d in EM_list:
+#             self.EM.append(norm[:len(d)])
+            self.EM.append(self.multi_data(norm[:len(d)]))
+            norm = norm[len(d):]
+        del EM_list
+        del norm
+        
+        met_list = []
         for filename in sorted(glob.glob(cfg['METCRO2D'])):
             print(filename+'   is loading')
             METCRO2D = np.load(filename)
 #             METCRO2D = simplify_matrix(METCRO2D,1,l_METCRO2D)
             tick,_,W,H = METCRO2D.shape
-            self.METCRO2D.append(METCRO2D[int(left*tick):int(right*tick)].astype(np.float32).copy())
+            met_list.append(METCRO2D[int(left*tick):int(right*tick)].astype(np.float32).copy())
             del METCRO2D
+        # Normalize
+        all_met = np.concatenate(met_list,axis=0)
+        _,dim,_,_ = all_met.shape
+        norm_data = []
+        for i in range(dim):
+            part_met = all_met[:,i:i+1,:,:]
+            norm_part = (part_met - np.mean(partmet))/(np.std(partmet,ddof=10))
+            norm_data.append(norm_part)
+        norm = np.concatenate(norm_data, axis=1)
+        del all_met
+        del norm_data
+        for d in met_list:
+            self.METCRO2D.append(norm[:len(d)])
+            norm = norm[len(d):]
+        del met_list
+        del norm
+            
             
         for filename in sorted(glob.glob(cfg['METCRO3D'])):
             print(filename+'   is loading')
@@ -106,3 +141,27 @@ class AS_Data(Dataset):
         
     def __len__(self):
         return self.bucket[-1] - 1
+    
+    def multi_data_pm25(self,data):
+        nh3 = data[:,1:2,:,:]
+        voc = data[:,4:5,:,:]
+        no = data[:,6:7,:,:]
+        so2 = data[:,2:3,:,:]
+        multi_data = np.concatenate([no,no*no,no*no*no,no*no*no*no,no*no*no*no*no,voc,voc*voc,voc*voc*voc,no*voc,no*voc*voc*voc,no*no*no*no*no*voc,no*no*voc,so2,nh3],axis=1)
+        return multi_data
+    
+    def multi_data_o3(self,data):
+        nh3 = data[:,1:2,:,:]
+        voc = data[:,4:5,:,:]
+        no = data[:,6:7,:,:]
+        so2 = data[:,2:3,:,:]
+        multi_data = np.concatenate([voc,voc*voc,nh3,nh3*nh3,nh3*nh3*nh3,so2,no,no*no,no*no*no,no*no*no*no,no*nh3,no*voc,no*no*voc,no*no*no*no*voc],axis=1)
+        return multi_data
+    
+    def multi_data(self,data):
+        nh3 = data[:,1:2,:,:]
+        voc = data[:,4:5,:,:]
+        no = data[:,6:7,:,:]
+        multi_data = np.concatenate([data,voc*voc,voc*voc*voc,no*no,no*no*no,no*no*no*no,no*no*no*no*no,no*voc,
+                              no*voc*voc*voc,no*no*voc,no*no*no*no*voc,no*no*no*no*no*voc,no*nh3,nh3*nh3,nh3*nh3*nh3],axis=1)
+        return multi_data

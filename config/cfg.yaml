@@ -1,7 +1,7 @@
 share_cfg:
   data_path:
-    EM: '/AS_data/zeyuan_folder/concat_data/MULTI_NORM_rest_EM_2015*.npy'
-#     EM: '/AS_data/zeyuan_folder/concat_data/*01_744_07_182_232.npy'
+#     EM: '/AS_data/zeyuan_folder/concat_data/MULTI_NORM_rest_EM_2015*.npy'
+    EM: '/AS_data/zeyuan_folder/concat_data/rest_EM_2015*.npy'
 #     EM: '/AS_data/finetune_input_prelu_VOCsame_PM25_O3_NO2_SO2/rest_4month_01*'
 #     EM: '/AS_data/finetune_input_prelu_PM25_O3_NO2_SO2/month_01*'
 #     EM: '/AS_data/finetune_input_prelu_VOCsame_PM25_O3_NO2_SO2/rest_NO_4month_floor_07*'
@@ -12,8 +12,8 @@ share_cfg:
     label: '/AS_data/Conc_npy/TOTAL_2015*'
 #     label: '/scratch/tmp/Conc_npy/TOTAl_2015_07*'
     grid: '/AS_data/Grid_npy/grid_27_182_232.npy'
-    METCRO2D: '/AS_data/METCRO2D_npy/NORM_METCRO2D_2015*'
-#     METCRO2D: '/AS_data/METCRO2D_npy/METCRO2D_2015*'
+#     METCRO2D: '/AS_data/METCRO2D_npy/NORM_METCRO2D_2015*'
+    METCRO2D: '/AS_data/METCRO2D_npy/METCRO2D_2015*'
     METCRO3D: ''
     METCRO3D_5height: ''
     obs_label: '/AS_data/obs_npy/obs2015*'
@@ -26,7 +26,7 @@ share_cfg:
 #   name: 'model_save/unet_LSTM_ALL_prelu_PM25_O3_NO2_SO2_best_epoch.t'
   # name: 'model_save/unet_LSTM_ALL_8emssion_PM25_O3_NO2_SO2_best_epoch.t'
 #   name: 'model_save/unet_LSTM_ALL_7emssion_PM25_O3_NO2_SO2_best_epoch.t'
-  name: 'model_save/test_step1_multi14_4month.t'
+  name: 'model_save/test.t'
 #   name: 'model_save/resnet_LSTM_ALL_7emssion_PM25_O3_NO2_SO2_best_epoch.t'
 step1:
   train:
