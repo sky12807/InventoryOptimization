@@ -60,7 +60,7 @@ class AS_Data_obs(AS_Data):
         
         
     
-    def update(self,indexes,ds):
+    def update(self,indexes,ds,final=False):
         for i,idx in enumerate(indexes):            
             bucket_idx = bisect.bisect_right(self.bucket,idx)-1
             idx -= self.bucket[bucket_idx]
@@ -71,7 +71,7 @@ class AS_Data_obs(AS_Data):
             
             self.EM[bucket_idx][idx:cur,self.EM_idx] = cur_inventory
             ### the input of inventory must be positive!!!!!
-            self.EM[bucket_idx][idx:cur] = np.clip(self.EM[bucket_idx][idx:cur],a_min = 0,a_max = None)
+            if final == True: self.EM[bucket_idx][idx:cur] = np.clip(self.EM[bucket_idx][idx:cur],a_min = 0,a_max = None)
 
 #             self.METCRO2D[bucket_idx][idx:cur] = ds[i][:,51:].cpu().numpy()
             

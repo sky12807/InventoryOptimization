@@ -1,0 +1,9 @@
+nohup: ignoring input
+file is reading now : /scratch/tmp/liusong/COMBINE_ACONC_v521_intel_microsoft_201501.nc
+/scratch/tmp/Conc_npy/TOTAl_2015_01_NO2_SO2_O3_PM25_PM10_CO__744_6_182_232.npy
+file is reading now : /scratch/tmp/liusong/COMBINE_ACONC_v521_intel_microsoft_201504.nc
+/scratch/tmp/Conc_npy/TOTAl_2015_04_NO2_SO2_O3_PM25_PM10_CO__720_6_182_232.npy
+file is reading now : /scratch/tmp/liusong/COMBINE_ACONC_v521_intel_microsoft_201507.nc
+/scratch/tmp/Conc_npy/TOTAl_2015_07_NO2_SO2_O3_PM25_PM10_CO__744_6_182_232.npy
+file is reading now : /scratch/tmp/liusong/COMBINE_ACONC_v521_intel_microsoft_201510.nc
+/scratch/tmp/Conc_npy/TOTAl_2015_10_NO2_SO2_O3_PM25_PM10_CO__744_6_182_232.npy

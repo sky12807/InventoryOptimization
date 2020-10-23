@@ -1,0 +1,175 @@
+nohup: ignoring input
+31
+<class 'netCDF4._netCDF4.Dataset'>
+[-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --]
+/AS_data/zeyuan_folder/reload_data/adjust_new_7EM_01_744_51_182_232.npy
+(744, 51, 182, 232)
+(744, 1, 51, 182, 232)
+<class 'list'>
+['ALD2', 'CO', 'ETH', 'FORM', 'ISOP', 'NH3', 'NO', 'NO2', 'UNR', 'OLE', 'PAR', 'PEC', 'PMC', 'PMOTHR', 'PNO3', 'POC', 'PSO4', 'PCL', 'PNH4', 'PNA', 'PMG', 'PK', 'PCA', 'PNCOM', 'PFE', 'PAL', 'PSI', 'PTI', 'PMN', 'PH2O', 'SO2', 'SULF', 'TERP', 'TOL', 'XYL', 'MEOH', 'ETOH', 'ETHA', 'ALDX', 'IOLE', 'CH4', 'AACD', 'NAPH', 'NR', 'SOAALK', 'XYLMN', 'PRPA', 'BENZ', 'ETHY', 'ACET', 'KET']
+51
+Process 0/31
+Process 1/31
+Process 2/31
+Process 3/31
+Process 4/31
+Process 5/31
+Process 6/31
+Process 7/31
+Process 8/31
+Process 9/31
+Process 10/31
+Process 11/31
+Process 12/31
+Process 13/31
+Process 14/31
+Process 15/31
+Process 16/31
+Process 17/31
+Process 18/31
+Process 19/31
+Process 20/31
+Process 21/31
+Process 22/31
+Process 23/31
+Process 24/31
+Process 25/31
+Process 26/31
+Process 27/31
+Process 28/31
+Process 29/31
+Process 30/31
+********************
+Month 04
+********************
+30
+<class 'netCDF4._netCDF4.Dataset'>
+/AS_data/zeyuan_folder/reload_data/adjust_new_7EM_04_720_51_182_232.npy
+(720, 51, 182, 232)
+(720, 1, 51, 182, 232)
+<class 'list'>
+['ALD2', 'CO', 'ETH', 'FORM', 'ISOP', 'NH3', 'NO', 'NO2', 'UNR', 'OLE', 'PAR', 'PEC', 'PMC', 'PMOTHR', 'PNO3', 'POC', 'PSO4', 'PCL', 'PNH4', 'PNA', 'PMG', 'PK', 'PCA', 'PNCOM', 'PFE', 'PAL', 'PSI', 'PTI', 'PMN', 'PH2O', 'SO2', 'SULF', 'TERP', 'TOL', 'XYL', 'MEOH', 'ETOH', 'ETHA', 'ALDX', 'IOLE', 'CH4', 'AACD', 'NAPH', 'NR', 'SOAALK', 'XYLMN', 'PRPA', 'BENZ', 'ETHY', 'ACET', 'KET']
+51
+Process 0/30
+Process 1/30
+Process 2/30
+Process 3/30
+Process 4/30
+Process 5/30
+Process 6/30
+Process 7/30
+Process 8/30
+Process 9/30
+Process 10/30
+Process 11/30
+Process 12/30
+Process 13/30
+Process 14/30
+Process 15/30
+Process 16/30
+Process 17/30
+Process 18/30
+Process 19/30
+Process 20/30
+Process 21/30
+Process 22/30
+Process 23/30
+Process 24/30
+Process 25/30
+Process 26/30
+Process 27/30
+Process 28/30
+Process 29/30
+********************
+Month 07
+********************
+31
+<class 'netCDF4._netCDF4.Dataset'>
+/AS_data/zeyuan_folder/reload_data/adjust_new_7EM_07_744_51_182_232.npy
+(744, 51, 182, 232)
+(744, 1, 51, 182, 232)
+<class 'list'>
+['ALD2', 'CO', 'ETH', 'FORM', 'ISOP', 'NH3', 'NO', 'NO2', 'UNR', 'OLE', 'PAR', 'PEC', 'PMC', 'PMOTHR', 'PNO3', 'POC', 'PSO4', 'PCL', 'PNH4', 'PNA', 'PMG', 'PK', 'PCA', 'PNCOM', 'PFE', 'PAL', 'PSI', 'PTI', 'PMN', 'PH2O', 'SO2', 'SULF', 'TERP', 'TOL', 'XYL', 'MEOH', 'ETOH', 'ETHA', 'ALDX', 'IOLE', 'CH4', 'AACD', 'NAPH', 'NR', 'SOAALK', 'XYLMN', 'PRPA', 'BENZ', 'ETHY', 'ACET', 'KET']
+51
+Process 0/31
+Process 1/31
+Process 2/31
+Process 3/31
+Process 4/31
+Process 5/31
+Process 6/31
+Process 7/31
+Process 8/31
+Process 9/31
+Process 10/31
+Process 11/31
+Process 12/31
+Process 13/31
+Process 14/31
+Process 15/31
+Process 16/31
+Process 17/31
+Process 18/31
+Process 19/31
+Process 20/31
+Process 21/31
+Process 22/31
+Process 23/31
+Process 24/31
+Process 25/31
+Process 26/31
+Process 27/31
+Process 28/31
+Process 29/31
+Process 30/31
+********************
+Month 10
+********************
+31
+<class 'netCDF4._netCDF4.Dataset'>
+/AS_data/zeyuan_folder/reload_data/adjust_new_7EM_10_744_51_182_232.npy
+(744, 51, 182, 232)
+(744, 1, 51, 182, 232)
+<class 'list'>
+['ALD2', 'CO', 'ETH', 'FORM', 'ISOP', 'NH3', 'NO', 'NO2', 'UNR', 'OLE', 'PAR', 'PEC', 'PMC', 'PMOTHR', 'PNO3', 'POC', 'PSO4', 'PCL', 'PNH4', 'PNA', 'PMG', 'PK', 'PCA', 'PNCOM', 'PFE', 'PAL', 'PSI', 'PTI', 'PMN', 'PH2O', 'SO2', 'SULF', 'TERP', 'TOL', 'XYL', 'MEOH', 'ETOH', 'ETHA', 'ALDX', 'IOLE', 'CH4', 'AACD', 'NAPH', 'NR', 'SOAALK', 'XYLMN', 'PRPA', 'BENZ', 'ETHY', 'ACET', 'KET']
+51
+Process 0/31
+Process 1/31
+Process 2/31
+Process 3/31
+Process 4/31
+Process 5/31
+Process 6/31
+Process 7/31
+Process 8/31
+Process 9/31
+Process 10/31
+Process 11/31
+Process 12/31
+Process 13/31
+Process 14/31
+Process 15/31
+Process 16/31
+Process 17/31
+Process 18/31
+Process 19/31
+Process 20/31
+Process 21/31
+Process 22/31
+Process 23/31
+Process 24/31
+Process 25/31
+Process 26/31
+Process 27/31
+Process 28/31
+Process 29/31
+Process 30/31

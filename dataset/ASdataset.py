@@ -34,6 +34,7 @@ class AS_Data(Dataset):
             self.bucket.append(self.bucket[-1]+int(right*tick)-int(left*tick)-window+1)
             del label
             
+        print(self.label[0].shape)
         _,_,W,H = self.label[0].shape
         self.W,self.H = W,H
         

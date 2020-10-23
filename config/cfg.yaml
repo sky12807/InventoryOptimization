@@ -1,18 +1,29 @@
 share_cfg:
   data_path:
-    EM: '/AS_data/concat_data/rest_EM_2015_01*'
-    label: '/AS_data/Conc_npy/TOTAL_2015_01*'
+    EM: '/AS_data/zeyuan_folder/concat_data/*10_744_07_182_232.npy'
+#     EM: '/AS_data/finetune_input_prelu_VOCsame_PM25_O3_NO2_SO2/rest_4month_01*'
+#     EM: '/AS_data/finetune_input_prelu_PM25_O3_NO2_SO2/month_01*'
+#     EM: '/AS_data/finetune_input_prelu_VOCsame_PM25_O3_NO2_SO2/rest_NO_4month_floor_07*'
+#     EM: '/AS_data/finetune_input_prelu_VOCsame_PM25_O3_NO2_SO2/rest_SULF_CO_4month_07*'
+#     EM: '/AS_data/finetune_input_prelu_VOCsame_PM25_O3_NO2_SO2/*07_182_232.npy'
+#     EM: '/AS_data/finetune_input_prelu_VOCsame_PM25_O3_NO2_SO2/rest_4month_7dim_07*'
+#     EM: '/AS_data/finetune_input_prelu_VOCsame_PM25_O3_NO2_SO2/rest_4month_SULF_CO_7dim_01*'
+    label: '/AS_data/Conc_npy/TOTAL_2015_10*'
+#     label: '/scratch/tmp/Conc_npy/TOTAl_2015_07*'
     grid: '/AS_data/Grid_npy/grid_27_182_232.npy'
-    METCRO2D: '/AS_data/METCRO2D_npy/METCRO2D_2015_01*'
+    METCRO2D: '/AS_data/METCRO2D_npy/METCRO2D_2015_10*'
     METCRO3D: ''
     METCRO3D_5height: ''
-    obs_label: '/AS_data/obs_npy/obs2015_01_*'
+    obs_label: '/AS_data/obs_npy/obs2015_10*'
   T: 24
   pollution: ['PM25','O3','NO2','SO2']
-  emission_dim: 8
+  emission_dim: 7
   meteorological_dim: 34
   grid_dim: 27
-  name: 'model_save/unet_LSTM_ALL_prelu_PM25_O3_NO2_SO2_best_epoch.t'
+#   name: 'model_save/unet_LSTM_ALL_prelu_PM25_O3_NO2_SO2_best_epoch.t'
+  # name: 'model_save/unet_LSTM_ALL_8emssion_PM25_O3_NO2_SO2_best_epoch.t'
+  name: 'model_save/unet_LSTM_ALL_7emssion_PM25_O3_NO2_SO2_best_epoch.t'
+#   name: 'model_save/resnet_LSTM_ALL_7emssion_PM25_O3_NO2_SO2_best_epoch.t'
 step1:
   train:
     left: 0
@@ -23,5 +34,9 @@ step1:
   batch_size: 2
 step2:
   batch_size: 1
-  EM_idx: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,42,43,44,45,46,47,48,50]
+#   EM_idx: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,42,43,44,45,46,47,48,50]
+#   EM_idx: [0,1,2,3,4,5,6,7]
+  # EM_idx: [1,2,3,4,6,7]
+  # EM_idx: [0,1,2,3,4,5,6]
+  EM_idx: [1,2,4,5,6]
   EM_save_path: '/AS_data/finetune_input_prelu_VOCsame_PM25_O3_NO2_SO2' #/month_{}_finetune_input.npy

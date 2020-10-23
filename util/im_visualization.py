@@ -15,7 +15,7 @@ def remove_white_edge(fig,height,width):
     
 
     
-def image_show(out,china_path):
+def image_show(out,china_path='../map.jpg'):
     '''
     out: k*182*232, wrong rate, k means PM25,O3,No2,So2
     china_path: china map

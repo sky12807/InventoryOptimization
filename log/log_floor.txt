@@ -1,0 +1,235 @@
+nohup: ignoring input
+test_step2.py:128: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  cfg = yaml.load(f)
+train data is loading 
+/AS_data/Conc_npy/TOTAL_2015_07_NO2_SO2_O3_PM25_PM10_CO__744_6_182_232.npy   is loading
+/AS_data/finetune_input_prelu_VOCsame_PM25_O3_NO2_SO2/rest_NO_4month_07_finetune_input.npy   is loading
+/AS_data/METCRO2D_npy/METCRO2D_2015_07_744_34_182_232.npy   is loading
+/AS_data/obs_npy/obs2015_07_744_6_182_232.npy   is loading
+720
+[0 1 2 3 4 5 6 7]
+-----------0-----------
+epoch 0 cur loss 7.396521091461182
+epoch 0 cur loss 7.432148456573486
+epoch 0 cur loss 7.441305160522461
+epoch 0 cur loss 7.409738540649414
+epoch 0 cur loss 7.461928367614746
+epoch 0 cur loss 7.471409320831299
+epoch 0 cur loss 7.4856672286987305
+-------------cur test loss L1:  9.485576,10.073584,5.1780667,3.6220787
+-----------1-----------
+epoch 1 cur loss 6.8791093826293945
+epoch 1 cur loss 6.9141082763671875
+epoch 1 cur loss 6.999687671661377
+epoch 1 cur loss 7.03390645980835
+epoch 1 cur loss 7.080265045166016
+epoch 1 cur loss 7.125348091125488
+epoch 1 cur loss 7.079996109008789
+-------------cur test loss L1:  8.934363,9.599475,5.0694423,3.5484593
+-----------2-----------
+epoch 2 cur loss 6.812368869781494
+epoch 2 cur loss 6.854001522064209
+epoch 2 cur loss 6.891894340515137
+epoch 2 cur loss 6.885607719421387
+epoch 2 cur loss 6.833625793457031
+epoch 2 cur loss 6.828704357147217
+epoch 2 cur loss 6.806311130523682
+-------------cur test loss L1:  8.492738,9.223297,4.968136,3.4975488
+-----------3-----------
+epoch 3 cur loss 6.720567226409912
+epoch 3 cur loss 6.606147289276123
+epoch 3 cur loss 6.53707218170166
+epoch 3 cur loss 6.560643196105957
+epoch 3 cur loss 6.574966907501221
+epoch 3 cur loss 6.551066875457764
+epoch 3 cur loss 6.578033924102783
+-------------cur test loss L1:  8.143052,8.89848,4.887201,3.4685464
+-----------4-----------
+epoch 4 cur loss 6.450434684753418
+epoch 4 cur loss 6.364325523376465
+epoch 4 cur loss 6.423300743103027
+epoch 4 cur loss 6.403773784637451
+epoch 4 cur loss 6.394975662231445
+epoch 4 cur loss 6.395730018615723
+epoch 4 cur loss 6.388358116149902
+-------------cur test loss L1:  7.8331947,8.6276865,4.822812,3.436084
+-----------5-----------
+epoch 5 cur loss 6.151942729949951
+epoch 5 cur loss 6.128010272979736
+epoch 5 cur loss 6.16792631149292
+epoch 5 cur loss 6.161488056182861
+epoch 5 cur loss 6.149741172790527
+epoch 5 cur loss 6.213549613952637
+epoch 5 cur loss 6.218991279602051
+-------------cur test loss L1:  7.5716114,8.377491,4.7548795,3.4188433
+-----------6-----------
+epoch 6 cur loss 6.226758003234863
+epoch 6 cur loss 6.072895050048828
+epoch 6 cur loss 6.085381507873535
+epoch 6 cur loss 6.09161376953125
+epoch 6 cur loss 6.084682464599609
+epoch 6 cur loss 6.1170759201049805
+epoch 6 cur loss 6.083264350891113
+-------------cur test loss L1:  7.3688383,8.168412,4.7004733,3.3836832
+-----------7-----------
+epoch 7 cur loss 5.779087543487549
+epoch 7 cur loss 5.879730224609375
+epoch 7 cur loss 5.814473628997803
+epoch 7 cur loss 5.828713417053223
+epoch 7 cur loss 5.912685394287109
+epoch 7 cur loss 5.94424295425415
+epoch 7 cur loss 5.955193519592285
+-------------cur test loss L1:  7.189291,7.9678917,4.650091,3.3659573
+-----------8-----------
+epoch 8 cur loss 5.734472751617432
+epoch 8 cur loss 5.753315448760986
+epoch 8 cur loss 5.814429759979248
+epoch 8 cur loss 5.799508094787598
+epoch 8 cur loss 5.809717178344727
+epoch 8 cur loss 5.8271613121032715
+epoch 8 cur loss 5.842674732208252
+-------------cur test loss L1:  7.0008187,7.7867365,4.5959206,3.3485193
+-----------9-----------
+epoch 9 cur loss 5.606511116027832
+epoch 9 cur loss 5.5400519371032715
+epoch 9 cur loss 5.6359405517578125
+epoch 9 cur loss 5.675611972808838
+epoch 9 cur loss 5.688936710357666
+epoch 9 cur loss 5.719703674316406
+epoch 9 cur loss 5.7347540855407715
+-------------cur test loss L1:  6.8546,7.626508,4.556053,3.3273513
+-----------10-----------
+epoch 10 cur loss 5.76007080078125
+epoch 10 cur loss 5.721988677978516
+epoch 10 cur loss 5.714651584625244
+epoch 10 cur loss 5.713237285614014
+epoch 10 cur loss 5.671378135681152
+epoch 10 cur loss 5.638543128967285
+epoch 10 cur loss 5.645423889160156
+-------------cur test loss L1:  6.704548,7.475653,4.5059695,3.3132114
+-----------11-----------
+epoch 11 cur loss 5.522761344909668
+epoch 11 cur loss 5.519506931304932
+epoch 11 cur loss 5.517678260803223
+epoch 11 cur loss 5.523766994476318
+epoch 11 cur loss 5.512645244598389
+epoch 11 cur loss 5.532849311828613
+epoch 11 cur loss 5.554260730743408
+-------------cur test loss L1:  6.5658073,7.329024,4.4681396,3.2927072
+-----------12-----------
+epoch 12 cur loss 5.238002300262451
+epoch 12 cur loss 5.359957218170166
+epoch 12 cur loss 5.439062595367432
+epoch 12 cur loss 5.490354061126709
+epoch 12 cur loss 5.463078498840332
+epoch 12 cur loss 5.449037075042725
+epoch 12 cur loss 5.476731300354004
+-------------cur test loss L1:  6.4578333,7.211833,4.4242616,3.281285
+-----------13-----------
+epoch 13 cur loss 5.449063301086426
+epoch 13 cur loss 5.351593494415283
+epoch 13 cur loss 5.351876258850098
+epoch 13 cur loss 5.363592624664307
+epoch 13 cur loss 5.3831610679626465
+epoch 13 cur loss 5.3712263107299805
+epoch 13 cur loss 5.402328968048096
+-------------cur test loss L1:  6.356667,7.086685,4.38982,3.265877
+-----------14-----------
+epoch 14 cur loss 5.147195339202881
+epoch 14 cur loss 5.23489236831665
+epoch 14 cur loss 5.230647087097168
+epoch 14 cur loss 5.283297061920166
+epoch 14 cur loss 5.289224624633789
+epoch 14 cur loss 5.32810640335083
+epoch 14 cur loss 5.330239772796631
+-------------cur test loss L1:  6.239201,6.971533,4.351435,3.2578683
+-----------15-----------
+epoch 15 cur loss 5.077272415161133
+epoch 15 cur loss 5.169808387756348
+epoch 15 cur loss 5.244353771209717
+epoch 15 cur loss 5.232540130615234
+epoch 15 cur loss 5.257277488708496
+epoch 15 cur loss 5.272564888000488
+epoch 15 cur loss 5.263479709625244
+-------------cur test loss L1:  6.1484528,6.8738422,4.3226247,3.2404716
+-----------16-----------
+epoch 16 cur loss 5.06721830368042
+epoch 16 cur loss 5.226239204406738
+epoch 16 cur loss 5.2629313468933105
+epoch 16 cur loss 5.193581581115723
+epoch 16 cur loss 5.210285186767578
+epoch 16 cur loss 5.196028709411621
+epoch 16 cur loss 5.199478626251221
+-------------cur test loss L1:  6.062112,6.7684264,4.2944703,3.2280638
+-----------17-----------
+epoch 17 cur loss 5.235040187835693
+epoch 17 cur loss 5.173810005187988
+epoch 17 cur loss 5.114774227142334
+epoch 17 cur loss 5.140053749084473
+epoch 17 cur loss 5.11852502822876
+epoch 17 cur loss 5.125514030456543
+epoch 17 cur loss 5.144810676574707
+-------------cur test loss L1:  5.961339,6.68183,4.258785,3.219267
+-----------18-----------
+epoch 18 cur loss 5.165041923522949
+epoch 18 cur loss 5.156683444976807
+epoch 18 cur loss 5.180434703826904
+epoch 18 cur loss 5.134972095489502
+epoch 18 cur loss 5.123887538909912
+epoch 18 cur loss 5.078223705291748
+epoch 18 cur loss 5.086023807525635
+-------------cur test loss L1:  5.8943615,6.5948787,4.2320266,3.204686
+-----------19-----------
+epoch 19 cur loss 5.124679088592529
+epoch 19 cur loss 4.99601936340332
+epoch 19 cur loss 5.053338527679443
+epoch 19 cur loss 5.059800624847412
+epoch 19 cur loss 5.049309730529785
+epoch 19 cur loss 5.019693374633789
+epoch 19 cur loss 5.035783767700195
+-------------cur test loss L1:  5.825208,6.5071063,4.201341,3.1942995
+-----------20-----------
+epoch 20 cur loss 5.021268367767334
+epoch 20 cur loss 4.953717231750488
+epoch 20 cur loss 4.976078510284424
+epoch 20 cur loss 4.948617458343506
+epoch 20 cur loss 4.943601131439209
+epoch 20 cur loss 4.981956481933594
+epoch 20 cur loss 4.987847805023193
+-------------cur test loss L1:  5.755954,6.422285,4.1805005,3.1848745
+-----------21-----------
+epoch 21 cur loss 4.793287754058838
+epoch 21 cur loss 4.875023365020752
+epoch 21 cur loss 4.881307601928711
+epoch 21 cur loss 4.896585464477539
+epoch 21 cur loss 4.92374324798584
+epoch 21 cur loss 4.942588806152344
+epoch 21 cur loss 4.940437316894531
+-------------cur test loss L1:  5.6935883,6.3527484,4.151002,3.1734502
+-----------22-----------
+epoch 22 cur loss 4.691149711608887
+epoch 22 cur loss 4.755987644195557
+epoch 22 cur loss 4.848964214324951
+epoch 22 cur loss 4.8441619873046875
+epoch 22 cur loss 4.875342845916748
+epoch 22 cur loss 4.899462699890137
+epoch 22 cur loss 4.896435737609863
+-------------cur test loss L1:  5.617698,6.2731295,4.125351,3.1668847
+-----------23-----------
+epoch 23 cur loss 4.808578968048096
+epoch 23 cur loss 4.820545196533203
+epoch 23 cur loss 4.835431098937988
+epoch 23 cur loss 4.796722888946533
+epoch 23 cur loss 4.823221683502197
+epoch 23 cur loss 4.840864181518555
+epoch 23 cur loss 4.854111671447754
+-------------cur test loss L1:  5.5633445,6.210497,4.106017,3.157549
+-----------24-----------
+epoch 24 cur loss 7.559749126434326
+epoch 24 cur loss 8.101768493652344
+epoch 24 cur loss 8.09774398803711
+epoch 24 cur loss 8.016070365905762
+epoch 24 cur loss 7.948733806610107
+epoch 24 cur loss 7.918188571929932
+epoch 24 cur loss 7.824214935302734
+-------------cur test loss L1:  10.031541,10.257011,5.256762,3.9791067
