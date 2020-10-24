@@ -69,8 +69,8 @@ class AS_Data(Dataset):
         del all_em
         del norm_data
         for d in EM_list:
-#             self.EM.append(norm[:len(d)])
-            self.EM.append(self.multi_data(norm[:len(d)]))
+            self.EM.append(norm[:len(d)])
+#             self.EM.append(self.multi_data(norm[:len(d)]))
             norm = norm[len(d):]
         del EM_list
         del norm
@@ -89,7 +89,7 @@ class AS_Data(Dataset):
         norm_data = []
         for i in range(dim):
             part_met = all_met[:,i:i+1,:,:]
-            norm_part = (part_met - np.mean(partmet))/(np.std(partmet,ddof=10))
+            norm_part = (part_met - np.mean(part_met))/(np.std(part_met,ddof=10))
             norm_data.append(norm_part)
         norm = np.concatenate(norm_data, axis=1)
         del all_met
@@ -137,7 +137,7 @@ class AS_Data(Dataset):
 #         d = np.concatenate([lower,higher],axis = 1)
 
         #### model re-train
-        return d,self.grid,self.label[bucket_idx][cur-self.window],self.label[bucket_idx][cur-1]
+        return d,self.grid,self.label[bucket_idx][cur-self.window],self.label[bucket_idx][cur-1], self.label[bucket_idx][cur-24:cur]
         
     def __len__(self):
         return self.bucket[-1] - 1
