@@ -19,7 +19,7 @@ share_cfg:
     obs_label: '/AS_data/obs_npy/obs2015*'
   T: 24
   pollution: ['PM25','O3','NO2','SO2']
-#   pollution: ['PM25']
+#   pollution: ['O3']
   emission_dim: 7
   meteorological_dim: 34
   grid_dim: 27

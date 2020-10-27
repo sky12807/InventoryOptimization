@@ -71,6 +71,7 @@ class AS_Data(Dataset):
         for d in EM_list:
             self.EM.append(norm[:len(d)])
 #             self.EM.append(self.multi_data(norm[:len(d)]))
+#             self.EM.append(self.multi_data_o3(norm[:len(d)]))
             norm = norm[len(d):]
         del EM_list
         del norm
@@ -108,13 +109,17 @@ class AS_Data(Dataset):
             self.METCRO3D.append(METCRO3D[int(left*tick):int(right*tick)].astype(np.float32).copy())
             del METCRO3D
             
-        
+        print(self.bucket)
         
     def __getitem__(self,idx):
         bucket_idx = bisect.bisect_right(self.bucket,idx)-1
         idx -= self.bucket[bucket_idx]
+        
+        if (len(self.label[bucket_idx]) <= (2*self.window+idx-1)) or (len(self.METCRO2D[bucket_idx]) <= (2*self.window+idx-1)):
+            idx -= self.window
+            
         cur = idx+self.window
-
+        
         em = self.EM[bucket_idx][idx:cur]
         metcro2d = self.METCRO2D[bucket_idx][idx:cur]
 #         metcro3d = self.METCRO3D[bucket_idx][idx:cur]
@@ -137,10 +142,10 @@ class AS_Data(Dataset):
 #         d = np.concatenate([lower,higher],axis = 1)
 
         #### model re-train
-        return d,self.grid,self.label[bucket_idx][cur-self.window],self.label[bucket_idx][cur-1], self.label[bucket_idx][cur-24:cur]
-        
+        return d,self.grid,self.label[bucket_idx][cur-self.window],self.label[bucket_idx][cur-1], self.label[bucket_idx][cur-1:self.window+cur-1],self.METCRO2D[bucket_idx][cur-1:self.window+cur-1]
+    
     def __len__(self):
-        return self.bucket[-1] - 1
+        return self.bucket[-1] - 2
     
     def multi_data_pm25(self,data):
         nh3 = data[:,1:2,:,:]

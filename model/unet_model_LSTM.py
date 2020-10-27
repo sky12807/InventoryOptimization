@@ -130,7 +130,7 @@ class UNet(nn.Module):
         return out
     
 class ReverseModel(nn.Module):
-    def __init__(self, n_channels,grid_dim,pre_dim,T,em_dim):
+    def __init__(self, n_channels,grid_dim,pre_dim,T,em_dim,bilinear=True):
         super(ReverseModel, self).__init__()        
         self.bn_metrod = nn.BatchNorm2d(n_channels)
         self.bn_y = nn.BatchNorm2d(pre_dim)
@@ -155,7 +155,7 @@ class ReverseModel(nn.Module):
         self.up4 = Up(128, 64, bilinear)
         
         self.conv_grid = nn.Sequential(
-            norm_layer(grid_dim),
+            nn.BatchNorm2d(grid_dim),
             nn.Conv2d(grid_dim, 32, kernel_size=7, stride=1, padding=3,
                                bias=False),
             nn.LeakyReLU(),
@@ -228,7 +228,11 @@ class ReverseModel(nn.Module):
         logit_grid = torch.cat([logits,grid],dim=1)
 #         print(f'logit_grid shape: {logit_grid.shape}')
         
+        logit_grid = logit_grid.permute(0,2,3,1)
+#         print(f'logit_grid shape: {logit_grid.shape}')
         out = self.linear(logit_grid)
+#         print(f'output shape: {out.shape}')
+        out = out.permute(0,3,1,2)
 #         print(f'output shape: {out.shape}')
         B,C,H,W = out.shape
         out = out.reshape(B,1,C,H,W)

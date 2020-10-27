@@ -1,5 +1,5 @@
 nohup: ignoring input
-test_step1.py:48: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+test_step2_reverse.py:60: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
   cfg = yaml.load(f)
 train data is loading 
 /AS_data/Conc_npy/TOTAL_2015_01_NO2_SO2_O3_PM25_PM10_CO__744_6_182_232.npy   is loading
@@ -10,8 +10,3 @@ train data is loading
 /AS_data/zeyuan_folder/concat_data/rest_EM_2015_01_744_07_182_232.npy   is loading
 /AS_data/zeyuan_folder/concat_data/rest_EM_2015_04_720_07_182_232.npy   is loading
 /AS_data/zeyuan_folder/concat_data/rest_EM_2015_07_744_07_182_232.npy   is loading
-/AS_data/zeyuan_folder/concat_data/rest_EM_2015_10_744_07_182_232.npy   is loading
-/AS_data/METCRO2D_npy/METCRO2D_2015_01_744_34_182_232.npy   is loading
-/AS_data/METCRO2D_npy/METCRO2D_2015_04_720_34_182_232.npy   is loading
-/AS_data/METCRO2D_npy/METCRO2D_2015_07_744_34_182_232.npy   is loading
-/AS_data/METCRO2D_npy/METCRO2D_2015_10_744_34_182_232.npy   is loading
