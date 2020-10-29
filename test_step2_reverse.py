@@ -108,15 +108,15 @@ for epoch in range(25):
     print('-----------{}-----------'.format(epoch))
     ls = []
     direct_ls = []
+    reverse_model.to(device)
     reverse_model.train()
     test_model.train()
-    count = 0
     for idx,i in enumerate(trainloader):
         input,grid,yt_1,label,next_label, next_metro = i
         em = input[:,:,:cfg['emission_dim'],:,:]
         metro = input[:,:,cfg['emission_dim']:,:,:]
 
-        input,em,metro,grid,yt_1,label,next_label, next_metro = input.to(device),em.to(device),metro.to(device),grid.to(device),yt_1.to(device),label.to(device),next_label.to(device),next_metro.to(device)
+        input,em,metro,grid,yt_1,label,next_label,next_metro = input.to(device),em.to(device),metro.to(device),grid.to(device),yt_1.to(device),label.to(device),next_label.to(device),next_metro.to(device)
         em_pred = reverse_model(next_metro,grid,next_label)
         new_em = torch.cat([em[:,:-1,:,:,:],em_pred.detach()],dim=1)
         x_pred = torch.cat([new_em,metro],dim=2)
@@ -126,10 +126,9 @@ for epoch in range(25):
         loss.backward()
         reverse_optimizer.step()
         direct_loss = criterion(em_pred.detach(),em[:,-1:,:,:,:])
-        count += 1
-        if count%40 == 0: print(f'Direct Loss: {direct_loss.cpu().data}; F Loss: {loss.cpu().data}')
         ls.append(loss.cpu().data)
         direct_ls.append(direct_loss.cpu().data)
+        if len(ls)%40 == 0: print(f'Direct Loss: {np.mean(np.array(direct_ls))}; F Loss: {np.mean(np.array(ls))}')
     print(f'Average Training Loss: Direct Loss: {np.mean(np.array(direct_ls))}; F Loss: {np.mean(np.array(ls))}')
 #     eval_loss = []
 #     eval_direct_loss = []
