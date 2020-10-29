@@ -131,23 +131,23 @@ for epoch in range(25):
         ls.append(loss.cpu().data)
         direct_ls.append(direct_loss.cpu().data)
     print(f'Average Training Loss: Direct Loss: {np.mean(np.array(direct_ls))}; F Loss: {np.mean(np.array(ls))}')
-    eval_loss = []
-    eval_direct_loss = []
-    print('********Evaluating*********')
-    for idx,i in enumerate(testloader):
-        input,grid,yt_1,label,next_label, next_metro = i
-        em = input[:,:,:cfg['emission_dim'],:,:]
-        metro = input[:,:,cfg['emission_dim']:,:,:]
+#     eval_loss = []
+#     eval_direct_loss = []
+#     print('********Evaluating*********')
+#     for idx,i in enumerate(testloader):
+#         input,grid,yt_1,label,next_label, next_metro = i
+#         em = input[:,:,:cfg['emission_dim'],:,:]
+#         metro = input[:,:,cfg['emission_dim']:,:,:]
 
-        input,em,metro,grid,yt_1,label,next_label, next_metro = input.to(device),em.to(device),metro.to(device),grid.to(device),yt_1.to(device),label.to(device),next_label.to(device),next_metro.to(device)
-        em_pred = reverse_model(next_metro,grid,next_label)
-        new_em = torch.cat([em[:,:-1,:,:,:],em_pred.detach()],dim=1)
-        x_pred = torch.cat([new_em,metro],dim=2)
-        label_pred = test_model(x_pred,grid,yt_1) #输入yt_1但是模型中没用
-        loss = criterion(label_pred,label)
-        direct_loss = criterion(em_pred.detach(),em[:,-1:,:,:,:])
-        eval_loss.append(loss.cpu().data)
-        eval_direct_loss.append(direct_loss.cpu().data)
-    print(f'------------Evaluating: Direct Loss: {np.mean(np.array(eval_direct_loss))}; F Loss: {np.mean(np.array(eval_loss))}')
+#         input,em,metro,grid,yt_1,label,next_label, next_metro = input.to(device),em.to(device),metro.to(device),grid.to(device),yt_1.to(device),label.to(device),next_label.to(device),next_metro.to(device)
+#         em_pred = reverse_model(next_metro,grid,next_label)
+#         new_em = torch.cat([em[:,:-1,:,:,:],em_pred.detach()],dim=1)
+#         x_pred = torch.cat([new_em,metro],dim=2)
+#         label_pred = test_model(x_pred,grid,yt_1) #输入yt_1但是模型中没用
+#         loss = criterion(label_pred,label)
+#         direct_loss = criterion(em_pred.detach(),em[:,-1:,:,:,:])
+#         eval_loss.append(loss.cpu().data)
+#         eval_direct_loss.append(direct_loss.cpu().data)
+#     print(f'------------Evaluating: Direct Loss: {np.mean(np.array(eval_direct_loss))}; F Loss: {np.mean(np.array(eval_loss))}')
     torch.save(reverse_model.cpu().state_dict(),'model_save/reverse_norm_4month_f_loss.t')
     
