@@ -58,23 +58,12 @@ class AS_Data(Dataset):
             EM_list.append(EM[int(left*tick):int(right*tick)].astype(np.float32).copy())
             del EM
         # Normalize
-        all_em = np.concatenate(EM_list,axis=0)
-        _,dim,_,_ = all_em.shape
-        norm_data = []
-        for i in range(dim):
-            part_em = all_em[:,i:i+1,:,:]
-            norm_part = (part_em - np.mean(part_em))/(np.std(part_em,ddof=10))
-            norm_data.append(norm_part)
-        norm = np.concatenate(norm_data, axis=1)
-        del all_em
-        del norm_data
-        for d in EM_list:
-            self.EM.append(norm[:len(d)])
-#             self.EM.append(self.multi_data(norm[:len(d)]))
-#             self.EM.append(self.multi_data_o3(norm[:len(d)]))
-            norm = norm[len(d):]
+        self.EM = np.concatenate(EM_list,axis=0)
+        self.em_mean,self.em_std = np.mean(self.EM,axis = (0,2,3),keepdims = True),np.std(self.EM,axis = (0,2,3),keepdims = True)
+        self.EM = (self.EM-self.em_mean)/(self.em_std+1e-3)
         del EM_list
-        del norm
+        
+        
         
         met_list = []
         for filename in sorted(glob.glob(cfg['METCRO2D'])):
@@ -85,21 +74,10 @@ class AS_Data(Dataset):
             met_list.append(METCRO2D[int(left*tick):int(right*tick)].astype(np.float32).copy())
             del METCRO2D
         # Normalize
-        all_met = np.concatenate(met_list,axis=0)
-        _,dim,_,_ = all_met.shape
-        norm_data = []
-        for i in range(dim):
-            part_met = all_met[:,i:i+1,:,:]
-            norm_part = (part_met - np.mean(part_met))/(np.std(part_met,ddof=10))
-            norm_data.append(norm_part)
-        norm = np.concatenate(norm_data, axis=1)
-        del all_met
-        del norm_data
-        for d in met_list:
-            self.METCRO2D.append(norm[:len(d)])
-            norm = norm[len(d):]
+        self.METCRO2D = np.concatenate(met_list,axis=0)
+        self.METCRO2D_mean,self.METCRO2D_std = np.mean(self.METCRO2D,axis = (0,2,3),keepdims = True),np.std(self.METCRO2D,axis = (0,2,3),keepdims = True)
+        self.METCRO2D = (self.METCRO2D-self.METCRO2D_mean)/(self.METCRO2D_std+1e-3)
         del met_list
-        del norm
             
             
         for filename in sorted(glob.glob(cfg['METCRO3D'])):
@@ -146,6 +124,15 @@ class AS_Data(Dataset):
     
     def __len__(self):
         return self.bucket[-1] - 2
+    
+    
+    
+    def de_normalize_em(self,x):
+        '''
+        x.shape:tick*emission_dim*W*h
+        '''
+        return x*(self.em_std+1e-3)+self.em_mean
+        
     
     def multi_data_pm25(self,data):
         nh3 = data[:,1:2,:,:]
