@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader,Dataset
 from util import simplify_matrix
 
 class AS_Data(Dataset):
-    def __init__(self,cfg,left = 0,right = 1,window=24,pollution = ['PM25','O3']):
+    def __init__(self,cfg,left = 0,right = 1,window=24,EM_idx = None,pollution = ['PM25','O3']):
         super(AS_Data,self).__init__()
         
         
@@ -60,9 +60,9 @@ class AS_Data(Dataset):
         # Normalize
         self.EM = np.concatenate(EM_list,axis=0)
         self.em_mean,self.em_std = np.mean(self.EM,axis = (0,2,3),keepdims = True),np.std(self.EM,axis = (0,2,3),keepdims = True)
-        self.EM = (self.EM-self.em_mean)/(self.em_std+1e-3)
+        self.EM = [(i- self.em_mean)/(1e-3+ self.em_std) for i in EM_list]
         del EM_list
-        
+        print(self.EM[0].shape)
         
         
         met_list = []
@@ -76,7 +76,7 @@ class AS_Data(Dataset):
         # Normalize
         self.METCRO2D = np.concatenate(met_list,axis=0)
         self.METCRO2D_mean,self.METCRO2D_std = np.mean(self.METCRO2D,axis = (0,2,3),keepdims = True),np.std(self.METCRO2D,axis = (0,2,3),keepdims = True)
-        self.METCRO2D = (self.METCRO2D-self.METCRO2D_mean)/(self.METCRO2D_std+1e-3)
+        self.METCRO2D = [(i- self.METCRO2D_mean)/(1e-3+ self.METCRO2D_std) for i in met_list]
         del met_list
             
             
@@ -89,7 +89,10 @@ class AS_Data(Dataset):
             
         print(self.bucket)
         
+        self.EM_idx = EM_idx
+        
     def __getitem__(self,idx):
+        temp_idx = idx
         bucket_idx = bisect.bisect_right(self.bucket,idx)-1
         idx -= self.bucket[bucket_idx]
         
@@ -120,7 +123,7 @@ class AS_Data(Dataset):
 #         d = np.concatenate([lower,higher],axis = 1)
 
         #### model re-train
-        return d,self.grid,self.label[bucket_idx][cur-self.window],self.label[bucket_idx][cur-1], self.label[bucket_idx][cur-1:self.window+cur-1],self.METCRO2D[bucket_idx][cur-1:self.window+cur-1]
+        return temp_idx,d,self.grid,self.label[bucket_idx][cur-self.window],self.label[bucket_idx][cur-1], self.label[bucket_idx][cur-1:self.window+cur-1],self.METCRO2D[bucket_idx][cur-1:self.window+cur-1]
     
     def __len__(self):
         return self.bucket[-1] - 2
@@ -157,3 +160,17 @@ class AS_Data(Dataset):
         multi_data = np.concatenate([data,voc*voc,voc*voc*voc,no*no,no*no*no,no*no*no*no,no*no*no*no*no,no*voc,
                               no*voc*voc*voc,no*no*voc,no*no*no*no*voc,no*no*no*no*no*voc,no*nh3,nh3*nh3,nh3*nh3*nh3],axis=1)
         return multi_data
+    
+    
+    def update(self,indexes,ds,final=False):
+        for i,idx in enumerate(indexes):            
+            bucket_idx = bisect.bisect_right(self.bucket,idx)-1
+            idx -= self.bucket[bucket_idx]
+            cur = idx+self.window
+            
+            ###update your input
+            cur_inventory = ds[i][:,self.EM_idx].detach().cpu().numpy()
+            
+            self.EM[bucket_idx][idx:cur,self.EM_idx] = cur_inventory
+            ### the input of inventory must be positive!!!!!
+            if final == True: self.EM[bucket_idx][idx:cur] = np.clip(self.EM[bucket_idx][idx:cur],a_min = 0,a_max = None)
