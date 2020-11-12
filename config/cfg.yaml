@@ -37,7 +37,7 @@ step1:
     right: 1
   batch_size: 2
 step2:
-  batch_size: 1
+  batch_size: 4
   train:
     left: 0
     right: 0.75
