@@ -12,8 +12,6 @@ import os
 
 
 
-
-## do not to see, please see  main
 def eVNA(obs,CTM,show = False):
     vor = Voronoi(lonlatcolrow[:,4:],qhull_options='Qbb Qc Qx')
     region_neighbor = [[] for _ in range(len(lonlatcolrow))]
@@ -52,6 +50,9 @@ def eVNA(obs,CTM,show = False):
     weight = np.expand_dims(cell_pos,axis = 1)-lonlatcolrow[:,4:][cell_neighbor]
     weight = 1/(1e-10+np.sum(weight**2,axis = -1))
     weight = weight*regions_sign[cell_cluster.reshape(-1)]
+    
+    weight = np.expand_dims(weight,axis = 2)
+    weight = weight*(obs[cell_neighbor]!=0)
     weight = weight/np.sum(weight,axis = -1,keepdims=True)
     print(weight.shape)
     
@@ -59,27 +60,12 @@ def eVNA(obs,CTM,show = False):
     #get the region's cell
     region_cell = np.array(lonlatcolrow[:,2]*182 + lonlatcolrow[:,3],np.int32) #[[] for _ in range(len(lonlatcolrow))]
     
-    
-    ## eVNA
-    # plt.rcParams['figure.figsize'] = (30,20)
-    
-    # res2[res2>100] = 100
-    # plt.imshow(res2.reshape(232,182).transpose(1,0)[::-1])
-    # plt.colorbar()
-    # plt.show()
+    res2 = np.sum(weight*obs[cell_neighbor]/CTM[region_cell[cell_neighbor]],axis = 1)*CTM
+    res = np.sum(weight*obs[cell_neighbor],axis = 1)
 
-    # #### VNA
-    if len(obs.shape)==2:
-        weight = np.expand_dims(weight,axis = 2)
-        res2 = np.sum(weight*obs[cell_neighbor]/CTM[region_cell[cell_neighbor]],axis = 1)*CTM
-        res = np.sum(weight*obs[cell_neighbor],axis = 1)
-    if len(obs.shape)==1:
-        res2 = np.sum(weight*obs[cell_neighbor]/CTM[region_cell[cell_neighbor]],axis = 1)*CTM
-        res = np.sum(weight*obs[cell_neighbor],axis = 1)
-    # plt.imshow(res.reshape(232,182).transpose(1,0)[::-1])
-    # plt.colorbar()
-    # plt.show()
-    return res , res2
+    #res is VNA
+    #res2 is eVNA
+    return res2
 
 
 
