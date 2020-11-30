@@ -37,7 +37,7 @@ step1:
     right: 1
   batch_size: 2
 step2:
-  batch_size: 4
+  batch_size: 2
   train:
     left: 0
     right: 0.75
@@ -49,4 +49,4 @@ step2:
   # EM_idx: [1,2,3,4,6,7]
   # EM_idx: [0,1,2,3,4,5,6]
   EM_idx: [1,2,4,5,6]
-  EM_save_path: '/AS_data/finetune_input_prelu_VOCsame_PM25_O3_NO2_SO2' #/month_{}_finetune_input.npy
+  EM_save_path: '/scratch/AS_data/finetuneInput_Trust0.1' #/month_{}_finetune_input.npy

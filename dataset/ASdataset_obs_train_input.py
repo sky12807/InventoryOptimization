@@ -11,7 +11,8 @@ from dataset.ASdataset import AS_Data
 
 class AS_Data_obs(AS_Data):
     def __init__(self,cfg,left = 0,right = 1,window=24,EM_idx = np.arange(51),pollution = ['PM25','O3']):
-        super(AS_Data_obs,self).__init__(cfg,left,right,window,pollution)
+        print(pollution)
+        super(AS_Data_obs,self).__init__(cfg,left,right,window,EM_idx,pollution=pollution)
         
         self.obs_label = []
         self.finetune_label = []
