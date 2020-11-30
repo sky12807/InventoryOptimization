@@ -10,8 +10,6 @@ from netCDF4 import Dataset
 import os
 
 
-
-
 def eVNA(obs,CTM,show = False):
     vor = Voronoi(lonlatcolrow[:,4:],qhull_options='Qbb Qc Qx')
     region_neighbor = [[] for _ in range(len(lonlatcolrow))]
@@ -48,14 +46,15 @@ def eVNA(obs,CTM,show = False):
     
     # get weight matrix
     weight = np.expand_dims(cell_pos,axis = 1)-lonlatcolrow[:,4:][cell_neighbor]
-    weight = 1/(1e-10+np.sum(weight**2,axis = -1))
+    weight = np.power(np.sum(weight**2,axis = -1),0.5) #distance
+    weight = 1/weight**2
     weight = weight*regions_sign[cell_cluster.reshape(-1)]
     
     weight = np.expand_dims(weight,axis = 2)
     weight = weight*(obs[cell_neighbor]!=0)
-    weight = weight/np.sum(weight,axis = -1,keepdims=True)
+    weight = weight/np.sum(weight,axis = 1,keepdims=True)
     print(weight.shape)
-    
+#     return weight
     
     #get the region's cell
     region_cell = np.array(lonlatcolrow[:,2]*182 + lonlatcolrow[:,3],np.int32) #[[] for _ in range(len(lonlatcolrow))]
@@ -66,7 +65,6 @@ def eVNA(obs,CTM,show = False):
     #res is VNA
     #res2 is eVNA
     return res2
-
 
 
 

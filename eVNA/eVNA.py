@@ -15,7 +15,7 @@ varname2 = ['','','','PM25_TOT','','']
 var = 4 
 year = 2017
 mon = 1
-day = 10
+day = 20
 #---------
 
 print(time.ctime())
