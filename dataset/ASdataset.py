@@ -57,8 +57,9 @@ class AS_Data(Dataset):
             tick,_,W,H = EM.shape
             EM_list.append(EM[int(left*tick):int(right*tick)].astype(np.float32).copy())
             del EM
+        self.EM = EM_list
         # Normalize
-        self.EM = np.concatenate(EM_list,axis=0)
+#         self.EM = np.concatenate(EM_list,axis=0)
 #         self.em_mean,self.em_std = np.mean(self.EM,axis = (0,2,3),keepdims = True),np.std(self.EM,axis = (0,2,3),keepdims = True)
 #         self.EM = [(i- self.em_mean)/(1e-3+ self.em_std) for i in EM_list]
         del EM_list
@@ -73,8 +74,9 @@ class AS_Data(Dataset):
             tick,_,W,H = METCRO2D.shape
             met_list.append(METCRO2D[int(left*tick):int(right*tick)].astype(np.float32).copy())
             del METCRO2D
+        self.METCRO2D = met_list
         # Normalize
-        self.METCRO2D = np.concatenate(met_list,axis=0)
+#         self.METCRO2D = np.concatenate(met_list,axis=0)
 #         self.METCRO2D_mean,self.METCRO2D_std = np.mean(self.METCRO2D,axis = (0,2,3),keepdims = True),np.std(self.METCRO2D,axis = (0,2,3),keepdims = True)
 #         self.METCRO2D = [(i- self.METCRO2D_mean)/(1e-3+ self.METCRO2D_std) for i in met_list]
         del met_list
@@ -103,6 +105,8 @@ class AS_Data(Dataset):
         
         em = self.EM[bucket_idx][idx:cur]
         metcro2d = self.METCRO2D[bucket_idx][idx:cur]
+        d = np.concatenate([em,metcro2d],axis = 1) #metcro3d metcro3d_5height
+        
 #         metcro3d = self.METCRO3D[bucket_idx][idx:cur]
 #         metcro3d_5height = self.METCRO3D_5height[bucket_idx][idx:cur]
         
@@ -110,7 +114,6 @@ class AS_Data(Dataset):
         grid = grid.reshape((self.window,-1,self.W,self.H))
         
         #metcro3d ,grid 
-        d = np.concatenate([em,metcro2d],axis = 1) #metcro3d metcro3d_5height
         
 #         mi = np.min(d,axis = (2,3),keepdims = True)
 #         ma = np.max(d,axis = (2,3),keepdims = True)
