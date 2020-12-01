@@ -75,8 +75,8 @@ class AS_Data(Dataset):
             del METCRO2D
         # Normalize
         self.METCRO2D = np.concatenate(met_list,axis=0)
-        self.METCRO2D_mean,self.METCRO2D_std = np.mean(self.METCRO2D,axis = (0,2,3),keepdims = True),np.std(self.METCRO2D,axis = (0,2,3),keepdims = True)
-        self.METCRO2D = [(i- self.METCRO2D_mean)/(1e-3+ self.METCRO2D_std) for i in met_list]
+#         self.METCRO2D_mean,self.METCRO2D_std = np.mean(self.METCRO2D,axis = (0,2,3),keepdims = True),np.std(self.METCRO2D,axis = (0,2,3),keepdims = True)
+#         self.METCRO2D = [(i- self.METCRO2D_mean)/(1e-3+ self.METCRO2D_std) for i in met_list]
         del met_list
             
             
