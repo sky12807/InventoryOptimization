@@ -61,7 +61,7 @@ class AS_Data_obs(AS_Data):
         
         
     
-    def update(self,indexes,ds,final=False):
+    def update(self,indexes,ds,final=True):
         for i,idx in enumerate(indexes):            
             bucket_idx = bisect.bisect_right(self.bucket,idx)-1
             idx -= self.bucket[bucket_idx]

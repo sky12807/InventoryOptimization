@@ -59,8 +59,8 @@ class AS_Data(Dataset):
             del EM
         # Normalize
         self.EM = np.concatenate(EM_list,axis=0)
-        self.em_mean,self.em_std = np.mean(self.EM,axis = (0,2,3),keepdims = True),np.std(self.EM,axis = (0,2,3),keepdims = True)
-        self.EM = [(i- self.em_mean)/(1e-3+ self.em_std) for i in EM_list]
+#         self.em_mean,self.em_std = np.mean(self.EM,axis = (0,2,3),keepdims = True),np.std(self.EM,axis = (0,2,3),keepdims = True)
+#         self.EM = [(i- self.em_mean)/(1e-3+ self.em_std) for i in EM_list]
         del EM_list
         print(self.EM[0].shape)
         
