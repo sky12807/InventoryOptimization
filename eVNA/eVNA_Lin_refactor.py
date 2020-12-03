@@ -59,7 +59,7 @@ def eVNA(obs,CTM,show = False):
     #get the region's cell
     region_cell = np.array(lonlatcolrow[:,2]*182 + lonlatcolrow[:,3],np.int32) #[[] for _ in range(len(lonlatcolrow))]
     
-    res2 = np.sum(weight*obs[cell_neighbor]/CTM[region_cell[cell_neighbor]],axis = 1)*CTM
+    res2 = np.sum(weight*obs[cell_neighbor]/(CTM[region_cell[cell_neighbor]]+1e-3),axis = 1)*CTM
     res = np.sum(weight*obs[cell_neighbor],axis = 1)
 
     #res is VNA
@@ -98,3 +98,65 @@ res = eVNA(obs,CTM)
 print(res.shape)
 res = res.reshape(232,182,-1)
 
+
+
+
+##################
+
+lonlatcolrow = np.load('sitelonlatcolrowxy.npy')
+print(lonlatcolrow[:10])
+lonlatdict = {}
+for i in range(len(lonlatcolrow)):
+    lonlatdict[str(int(lonlatcolrow[i,2]))+str(int(lonlatcolrow[i,3]))] = i
+# print(lonlatdict)
+
+
+
+ctm = np.load('/AS_data/Conc_npy/TOTAL_2015_01_NO2_SO2_O3_PM25_PM10_CO__744_6_182_232.npy')[:,:,:,:]
+ctm[ctm==-999] = 0
+print(ctm.shape)
+ctm = ctm.transpose(3,2,0,1).reshape(42224,-1)
+print(ctm.shape)
+obs = np.zeros([1639,744,6])
+obs_path = "/AS_data/obs_nc/obs2015_1/*"
+
+
+
+count = 0
+monitor = {}
+with open('../monitorij_cn27_prov.txt') as f:
+    for line in f:
+        info = line.strip().split()
+        try:
+            index = lonlatdict[str(int(info[-2])) + str(int(info[-1]))]
+            monitor[info[0]] = index
+        except:
+            count += 1
+print(len(monitor))
+print(count)
+
+
+# ctm = []
+for file in glob.glob(obs_path):
+    try:
+        site_obs = np.loadtxt(file)[:,1:]
+        site_obs[site_obs==-999] = 0
+        code = file.split('/')[-1].replace('.txt','')
+#         print(code)
+#         ctm.append(site_ctm)
+#         print(np.sum(site_obs))
+#         print(lonlatdict[code])
+        obs[monitor[code]] = site_obs
+#         print(obs[lonlatdict[code]])
+    except:
+        print(code)
+#     print(site_ctm.shape)
+obs = np.array(obs)
+print(obs.shape)
+obs = np.concatenate([obs[:,8:],np.zeros([1639,8,6])],axis = 1)
+print(obs.shape)
+obs = obs.reshape(1639,-1)
+
+
+obs_eVNA = eVNA(obs,ctm)
+obs_eVNA = np.clip(obs_eVNA,a_min = 0,a_max = np.max(obs,axis=0,keepdims=True))

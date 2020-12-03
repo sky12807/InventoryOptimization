@@ -55,7 +55,7 @@ class UNet(nn.Module):
                                                    )
                         )
             
-            self.out_conv_s.append(nn.Sequential(nn.Conv2d(64+8, 64, kernel_size=1), #(8+8+8,64),
+            self.out_conv_s.append(nn.Sequential(nn.Conv2d(64+8+8, 64, kernel_size=1), #(8+8+8,64),
                                                 nn.LeakyReLU(),
                                                 nn.Conv2d(64, 1, kernel_size=1))
                                   )
@@ -119,11 +119,11 @@ class UNet(nn.Module):
 #         print(f'Concat logits and grid: {logits.shape}')
         out = []
         for air in range(self.pre_dim):
-#             yt_1_now = self.conv_y_s[air](yt_1[:,air:air+1])
+            yt_1_now = self.conv_y_s[air](yt_1[:,air:air+1])
 #             print(f'new yt shape: {yt_1_now.shape}')
-#             out.append(self.out_conv_s[air](torch.cat([logits,yt_1_now],dim = 1)))
+            out.append(self.out_conv_s[air](torch.cat([logits,yt_1_now],dim = 1)))
 #             print(f'part out shape: {out[-1].shape}')
-            out.append(self.out_conv_s[air](logits))
+#             out.append(self.out_conv_s[air](logits))
             
         out = torch.cat(out,dim = 1)
 #         print(f'out shape: {out.shape}')

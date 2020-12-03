@@ -6,7 +6,7 @@ import torch.nn.functional as F
 class Tensor_Parameter(nn.Module):
     def __init__(self,):
         super(Tensor_Parameter,self).__init__()
-        self.Input = nn.Parameter(torch.zeros(1))
+        self.Input = nn.Parameter(torch.zeros(1),requires_grad=True)
     
     def forward(self,x):
         self.Input.data = x

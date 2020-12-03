@@ -38,6 +38,7 @@ class AS_Data_obs(AS_Data):
             del obs_label
         
         self.EM_idx = EM_idx
+        self.EM_base = [i.copy() for i in self.EM]
         
     def __getitem__(self,index):
         
@@ -72,7 +73,7 @@ class AS_Data_obs(AS_Data):
             
             self.EM[bucket_idx][idx:cur,self.EM_idx] = cur_inventory
             ### the input of inventory must be positive!!!!!
-            if final == True: self.EM[bucket_idx][idx:cur] = np.clip(self.EM[bucket_idx][idx:cur],a_min = 0,a_max = None)
+            if final == True: self.EM[bucket_idx][idx:cur] = np.clip(self.EM[bucket_idx][idx:cur],a_min = 0,a_max = 2*self.EM_base[bucket_idx][idx:cur])
 
 #             self.METCRO2D[bucket_idx][idx:cur] = ds[i][:,51:].cpu().numpy()
             

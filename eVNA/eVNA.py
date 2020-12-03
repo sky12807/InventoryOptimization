@@ -15,15 +15,15 @@ varname2 = ['','','','PM25_TOT','','']
 var = 4 
 year = 2017
 mon = 1
-day = 20
+day = 15
 #---------
 
 print(time.ctime())
 
 print("read data")
-lonlatcolrow = np.load('/data1/home/dingd/dlrsm/emis/obs/day/sitelonlatcolrowxy.npy')
-ddata = np.load('/data1/home/dingd/dlrsm/emis/obs/day/'+str(year)+'_'+str(mon)+'_dailyobs.npy')
-sim = Dataset("/data1/home/dingd/dlrsm/emis/sim/"+varname2[var-1]+"_"+str(year*100+mon)+".nc","r")
+lonlatcolrow = np.load('sitelonlatcolrowxy.npy')
+ddata = np.load(str(year)+'_'+str(mon)+'_dailyobs.npy')
+sim = Dataset(varname2[var-1]+"_"+str(year*100+mon)+".nc","r")
 simdata = sim.variables[varname2[var-1]][:]
 
 s = 0

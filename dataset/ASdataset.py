@@ -58,11 +58,11 @@ class AS_Data(Dataset):
             EM_list.append(EM[int(left*tick):int(right*tick)].astype(np.float32).copy())
             del EM
         self.EM = EM_list
-        # Normalize
+#         # Normalize
 #         self.EM = np.concatenate(EM_list,axis=0)
-#         self.em_mean,self.em_std = np.mean(self.EM,axis = (0,2,3),keepdims = True),np.std(self.EM,axis = (0,2,3),keepdims = True)
-#         self.EM = [(i- self.em_mean)/(1e-3+ self.em_std) for i in EM_list]
-        del EM_list
+#         self.em_min,self.em_max = np.min(self.EM,axis = (0,2,3),keepdims = True),np.max(self.EM,axis = (0,2,3),keepdims = True)
+#         self.EM = [(i- self.em_min)/(1e-5+ self.em_max-self.em_min) for i in EM_list]
+#         del EM_list
         print(self.EM[0].shape)
         
         
@@ -76,9 +76,9 @@ class AS_Data(Dataset):
             del METCRO2D
         self.METCRO2D = met_list
         # Normalize
-#         self.METCRO2D = np.concatenate(met_list,axis=0)
-#         self.METCRO2D_mean,self.METCRO2D_std = np.mean(self.METCRO2D,axis = (0,2,3),keepdims = True),np.std(self.METCRO2D,axis = (0,2,3),keepdims = True)
-#         self.METCRO2D = [(i- self.METCRO2D_mean)/(1e-3+ self.METCRO2D_std) for i in met_list]
+        self.METCRO2D = np.concatenate(met_list,axis=0)
+        self.METCRO2D_min,self.METCRO2D_max = np.min(self.METCRO2D,axis = (0,2,3),keepdims = True),np.max(self.METCRO2D,axis = (0,2,3),keepdims = True)
+        self.METCRO2D = [(i- self.METCRO2D_min)/(self.METCRO2D_max-self.METCRO2D_min+1e-5) for i in met_list]
         del met_list
             
             
@@ -110,8 +110,8 @@ class AS_Data(Dataset):
 #         metcro3d = self.METCRO3D[bucket_idx][idx:cur]
 #         metcro3d_5height = self.METCRO3D_5height[bucket_idx][idx:cur]
         
-        grid = np.repeat(self.grid, self.window, axis=0)
-        grid = grid.reshape((self.window,-1,self.W,self.H))
+#         grid = np.repeat(self.grid, self.window, axis=0)
+#         grid = grid.reshape((self.window,-1,self.W,self.H))
         
         #metcro3d ,grid 
         
@@ -137,7 +137,7 @@ class AS_Data(Dataset):
         '''
         x.shape:tick*emission_dim*W*h
         '''
-        return x*(self.em_std+1e-3)+self.em_mean
+        return x*(self.em_max-self.em_min)+self.em_min
         
     
     def multi_data_pm25(self,data):
