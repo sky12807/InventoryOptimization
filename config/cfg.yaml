@@ -26,7 +26,7 @@ share_cfg:
 #   name: 'model_save/unet_LSTM_ALL_prelu_PM25_O3_NO2_SO2_best_epoch.t'
   # name: 'model_save/unet_LSTM_ALL_8emssion_PM25_O3_NO2_SO2_best_epoch.t'
 #   name: 'model_save/unet_LSTM_ALL_7emssion_PM25_O3_NO2_SO2_best_epoch.t'
-  name: 'model_save/test_step1_norm_4month.t'
+  name: 'model_save/step1_best.t'
 #   name: 'model_save/resnet_LSTM_ALL_7emssion_PM25_O3_NO2_SO2_best_epoch.t'
 step1:
   train:
@@ -49,4 +49,4 @@ step2:
   # EM_idx: [1,2,3,4,6,7]
   # EM_idx: [0,1,2,3,4,5,6]
   EM_idx: [1,2,4,5,6]
-  EM_save_path: '/scratch/AS_data/finetuneInput_Trust0.1' #/month_{}_finetune_input.npy
+  EM_save_path: '/scratch/AS_data/finetuneInput_7em_Trust1' #/month_{}_finetune_input.npy

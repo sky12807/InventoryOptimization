@@ -4195,3 +4195,293 @@ Unfortunately, your original traceback can not be constructed.
 
  test score in the beginning is [27.956846 14.998398 10.889558 11.238284]
 2020-11-30 13:51:22,868 : /scratch/AS_data/finetuneInput_Trust0.1/month_01.npy>>>>> input file save successful！
+2020-11-30 15:18:41,685 : training data is loading
+2020-11-30 15:19:24,913 : training data load successful
+2020-11-30 15:19:24,914 : 720
+2020-11-30 15:19:24,914 : [1 2 4 5 6]
+2020-11-30 15:19:27,370 : -----------0-----------
+2020-11-30 15:22:18,776 : epoch 0 cur loss 22.57
+2020-11-30 15:25:09,818 : epoch 0 cur loss 22.27
+2020-11-30 15:28:00,718 : epoch 0 cur loss 22.08
+2020-11-30 15:29:36,466 : epoch 0 is endding, the epoch training loss is : 22.07, time cost is 609.10
+2020-11-30 15:31:24,612 : 
+
+
+ test score in the beginning is [41.522896  19.17024   13.1340275 13.4806185]
+2020-11-30 15:31:25,260 : /scratch/AS_data/finetuneInput_Trust0.1/month_01.npy>>>>> input file save successful！
+2020-11-30 15:31:25,260 : -----------1-----------
+2020-11-30 15:34:12,618 : epoch 1 cur loss 21.70
+2020-11-30 15:36:58,432 : epoch 1 cur loss 21.53
+2020-11-30 15:39:43,725 : epoch 1 cur loss 21.52
+2020-11-30 15:41:16,326 : epoch 1 is endding, the epoch training loss is : 21.48, time cost is 591.07
+2020-11-30 15:42:56,747 : 
+
+
+ test score in the beginning is [39.90469  18.824284 12.864851 13.240449]
+2020-11-30 15:42:56,748 : -----------2-----------
+2020-11-30 15:45:42,087 : epoch 2 cur loss 21.24
+2020-11-30 15:48:27,497 : epoch 2 cur loss 20.95
+2020-11-30 15:51:12,257 : epoch 2 cur loss 20.98
+2020-11-30 15:52:49,697 : epoch 2 is endding, the epoch training loss is : 20.98, time cost is 592.95
+2020-11-30 15:54:28,239 : 
+
+
+ test score in the beginning is [38.612522 18.492008 12.656173 13.071363]
+2020-11-30 15:54:28,239 : -----------3-----------
+2020-11-30 15:57:13,526 : epoch 3 cur loss 21.01
+2020-11-30 15:59:57,934 : epoch 3 cur loss 20.66
+2020-11-30 16:02:46,227 : epoch 3 cur loss 20.59
+2020-11-30 16:04:23,814 : epoch 3 is endding, the epoch training loss is : 20.57, time cost is 595.57
+2020-11-30 16:06:13,734 : 
+
+
+ test score in the beginning is [37.522457 18.232552 12.486026 12.889733]
+2020-11-30 16:06:14,506 : /scratch/AS_data/finetuneInput_Trust0.1/month_01.npy>>>>> input file save successful！
+2020-11-30 16:06:14,507 : -----------4-----------
+2020-11-30 16:09:03,577 : epoch 4 cur loss 19.93
+2020-11-30 16:11:52,365 : epoch 4 cur loss 20.19
+2020-11-30 16:14:38,029 : epoch 4 cur loss 20.09
+2020-11-30 16:16:15,570 : epoch 4 is endding, the epoch training loss is : 20.12, time cost is 601.06
+2020-11-30 16:17:54,324 : 
+
+
+ test score in the beginning is [36.692905 17.91654  12.403138 12.814142]
+2020-11-30 16:17:54,324 : -----------5-----------
+2020-11-30 16:20:40,363 : epoch 5 cur loss 19.90
+2020-11-30 16:23:25,241 : epoch 5 cur loss 19.60
+2020-11-30 16:26:09,957 : epoch 5 cur loss 19.72
+2020-11-30 16:27:41,952 : epoch 5 is endding, the epoch training loss is : 19.80, time cost is 587.63
+2020-11-30 16:29:20,204 : 
+
+
+ test score in the beginning is [35.79488  17.624989 12.259052 12.687331]
+2020-11-30 16:29:20,205 : -----------6-----------
+2020-11-30 16:32:05,660 : epoch 6 cur loss 19.39
+2020-11-30 16:34:51,165 : epoch 6 cur loss 19.48
+2020-11-30 16:37:36,181 : epoch 6 cur loss 19.55
+2020-11-30 16:39:08,948 : epoch 6 is endding, the epoch training loss is : 19.45, time cost is 588.74
+2020-11-30 16:40:47,779 : 
+
+
+ test score in the beginning is [35.08105  17.499548 12.126662 12.539716]
+2020-11-30 16:40:48,582 : /scratch/AS_data/finetuneInput_Trust0.1/month_01.npy>>>>> input file save successful！
+2020-11-30 16:40:48,582 : -----------7-----------
+2020-11-30 16:43:34,001 : epoch 7 cur loss 19.28
+2020-11-30 16:46:19,434 : epoch 7 cur loss 19.28
+2020-11-30 16:49:05,173 : epoch 7 cur loss 19.29
+2020-11-30 16:50:37,977 : epoch 7 is endding, the epoch training loss is : 19.26, time cost is 589.40
+2020-11-30 16:52:16,279 : 
+
+
+ test score in the beginning is [34.453335 17.254293 12.027457 12.429694]
+2020-11-30 16:52:16,280 : -----------8-----------
+2020-11-30 16:55:01,820 : epoch 8 cur loss 18.93
+2020-11-30 16:57:47,345 : epoch 8 cur loss 19.00
+2020-11-30 17:00:33,920 : epoch 8 cur loss 18.98
+2020-11-30 17:02:09,171 : epoch 8 is endding, the epoch training loss is : 18.92, time cost is 592.89
+2020-11-30 17:03:58,417 : 
+
+
+ test score in the beginning is [33.743713 17.016897 11.917407 12.317449]
+2020-11-30 17:03:58,418 : -----------9-----------
+2020-11-30 17:06:48,496 : epoch 9 cur loss 18.61
+2020-11-30 17:09:37,777 : epoch 9 cur loss 18.82
+2020-11-30 17:12:26,880 : epoch 9 cur loss 18.72
+2020-11-30 17:14:06,897 : epoch 9 is endding, the epoch training loss is : 18.74, time cost is 608.48
+2020-11-30 17:15:45,509 : 
+
+
+ test score in the beginning is [33.192142 16.926538 11.821893 12.231787]
+2020-11-30 17:15:46,301 : /scratch/AS_data/finetuneInput_Trust0.1/month_01.npy>>>>> input file save successful！
+2020-11-30 17:15:46,302 : -----------10-----------
+2020-11-30 17:18:32,230 : epoch 10 cur loss 18.73
+2020-11-30 17:21:17,601 : epoch 10 cur loss 18.51
+2020-11-30 17:24:03,136 : epoch 10 cur loss 18.47
+2020-11-30 17:25:40,747 : epoch 10 is endding, the epoch training loss is : 18.48, time cost is 594.44
+2020-11-30 17:27:19,551 : 
+
+
+ test score in the beginning is [32.7663   16.585554 11.765025 12.183494]
+2020-11-30 17:27:19,552 : -----------11-----------
+2020-11-30 17:30:05,125 : epoch 11 cur loss 18.25
+2020-11-30 17:32:50,588 : epoch 11 cur loss 18.32
+2020-11-30 17:35:36,205 : epoch 11 cur loss 18.27
+2020-11-30 17:37:12,007 : epoch 11 is endding, the epoch training loss is : 18.27, time cost is 592.46
+2020-11-30 17:38:50,426 : 
+
+
+ test score in the beginning is [32.20338  16.588118 11.664559 12.0571  ]
+2020-11-30 17:38:50,427 : -----------12-----------
+2020-11-30 17:41:34,709 : epoch 12 cur loss 18.00
+2020-11-30 17:44:19,424 : epoch 12 cur loss 17.94
+2020-11-30 17:47:03,708 : epoch 12 cur loss 18.05
+2020-11-30 17:48:42,345 : epoch 12 is endding, the epoch training loss is : 18.05, time cost is 591.92
+2020-11-30 17:50:20,626 : 
+
+
+ test score in the beginning is [31.70366  16.300032 11.610322 11.968566]
+2020-11-30 17:50:21,422 : /scratch/AS_data/finetuneInput_Trust0.1/month_01.npy>>>>> input file save successful！
+2020-11-30 17:50:21,422 : -----------13-----------
+2020-11-30 17:53:06,868 : epoch 13 cur loss 17.75
+2020-11-30 17:55:51,439 : epoch 13 cur loss 17.78
+2020-11-30 17:58:36,445 : epoch 13 cur loss 17.70
+2020-11-30 18:00:13,986 : epoch 13 is endding, the epoch training loss is : 17.80, time cost is 592.56
+2020-11-30 18:02:02,820 : 
+
+
+ test score in the beginning is [31.285124 16.111647 11.482358 11.863307]
+2020-11-30 18:02:02,821 : -----------14-----------
+2020-11-30 18:04:51,909 : epoch 14 cur loss 17.82
+2020-11-30 18:07:40,208 : epoch 14 cur loss 17.73
+2020-11-30 18:10:28,311 : epoch 14 cur loss 17.66
+2020-11-30 18:12:07,938 : epoch 14 is endding, the epoch training loss is : 17.68, time cost is 605.12
+2020-11-30 18:13:52,660 : 
+
+
+ test score in the beginning is [30.841593 16.04163  11.452342 11.805058]
+2020-11-30 18:13:52,661 : -----------15-----------
+2020-11-30 18:16:38,876 : epoch 15 cur loss 17.70
+2020-11-30 18:19:24,808 : epoch 15 cur loss 17.60
+2020-11-30 18:22:10,541 : epoch 15 cur loss 17.54
+2020-11-30 18:23:50,037 : epoch 15 is endding, the epoch training loss is : 17.45, time cost is 597.38
+2020-11-30 18:25:29,157 : 
+
+
+ test score in the beginning is [30.505043  15.8909645 11.386256  11.726993 ]
+2020-11-30 18:25:29,986 : /scratch/AS_data/finetuneInput_Trust0.1/month_01.npy>>>>> input file save successful！
+2020-11-30 18:25:29,987 : -----------16-----------
+2020-11-30 18:28:16,814 : epoch 16 cur loss 17.68
+2020-11-30 18:31:02,351 : epoch 16 cur loss 17.45
+2020-11-30 18:33:48,026 : epoch 16 cur loss 17.42
+2020-11-30 18:35:24,034 : epoch 16 is endding, the epoch training loss is : 17.43, time cost is 594.05
+2020-11-30 18:37:03,521 : 
+
+
+ test score in the beginning is [30.178616  15.8303795 11.347732  11.678528 ]
+2020-11-30 18:37:03,522 : -----------17-----------
+2020-11-30 18:39:48,376 : epoch 17 cur loss 16.67
+2020-11-30 18:42:33,529 : epoch 17 cur loss 17.16
+2020-11-30 18:45:18,905 : epoch 17 cur loss 16.99
+2020-11-30 18:46:56,403 : epoch 17 is endding, the epoch training loss is : 17.14, time cost is 592.88
+2020-11-30 18:48:36,148 : 
+
+
+ test score in the beginning is [29.933683 15.752907 11.257608 11.634126]
+2020-11-30 18:48:36,149 : -----------18-----------
+2020-11-30 18:51:21,886 : epoch 18 cur loss 17.76
+2020-11-30 18:54:07,447 : epoch 18 cur loss 17.29
+2020-11-30 18:56:52,326 : epoch 18 cur loss 17.26
+2020-11-30 18:58:26,442 : epoch 18 is endding, the epoch training loss is : 17.11, time cost is 590.29
+2020-11-30 19:00:06,360 : 
+
+
+ test score in the beginning is [29.592033 15.571211 11.194064 11.532836]
+2020-11-30 19:00:07,219 : /scratch/AS_data/finetuneInput_Trust0.1/month_01.npy>>>>> input file save successful！
+2020-11-30 19:00:07,219 : -----------19-----------
+2020-11-30 19:02:57,215 : epoch 19 cur loss 16.91
+2020-11-30 19:05:47,422 : epoch 19 cur loss 16.89
+2020-11-30 19:08:37,057 : epoch 19 cur loss 17.01
+2020-11-30 19:10:17,039 : epoch 19 is endding, the epoch training loss is : 16.94, time cost is 609.82
+2020-11-30 19:12:06,601 : 
+
+
+ test score in the beginning is [29.290903 15.497353 11.153324 11.478564]
+2020-11-30 19:12:06,602 : -----------20-----------
+2020-11-30 19:14:55,249 : epoch 20 cur loss 17.28
+2020-11-30 19:17:41,277 : epoch 20 cur loss 16.99
+2020-11-30 19:20:27,020 : epoch 20 cur loss 16.85
+2020-11-30 19:22:04,866 : epoch 20 is endding, the epoch training loss is : 16.83, time cost is 598.26
+2020-11-30 19:23:44,349 : 
+
+
+ test score in the beginning is [28.937084  15.444724  11.103401  11.4592905]
+2020-11-30 19:23:44,350 : -----------21-----------
+2020-11-30 19:26:30,480 : epoch 21 cur loss 17.17
+2020-11-30 19:29:16,784 : epoch 21 cur loss 16.72
+2020-11-30 19:32:02,582 : epoch 21 cur loss 16.74
+2020-11-30 19:33:38,855 : epoch 21 is endding, the epoch training loss is : 16.71, time cost is 594.51
+2020-11-30 19:35:18,179 : 
+
+
+ test score in the beginning is [28.729422 15.339513 11.01235  11.356764]
+2020-11-30 19:35:18,990 : /scratch/AS_data/finetuneInput_Trust0.1/month_01.npy>>>>> input file save successful！
+2020-11-30 19:35:18,991 : -----------22-----------
+2020-11-30 19:38:04,570 : epoch 22 cur loss 16.65
+2020-11-30 19:40:50,118 : epoch 22 cur loss 16.70
+2020-11-30 19:43:35,190 : epoch 22 cur loss 16.62
+2020-11-30 19:45:11,032 : epoch 22 is endding, the epoch training loss is : 16.61, time cost is 592.04
+2020-11-30 19:46:50,481 : 
+
+
+ test score in the beginning is [28.557905 15.278401 11.033616 11.341296]
+2020-11-30 19:46:50,482 : -----------23-----------
+2020-11-30 19:49:36,355 : epoch 23 cur loss 16.35
+2020-11-30 19:52:22,068 : epoch 23 cur loss 16.46
+2020-11-30 19:55:07,654 : epoch 23 cur loss 16.50
+2020-11-30 19:56:47,063 : epoch 23 is endding, the epoch training loss is : 16.47, time cost is 596.58
+2020-11-30 19:58:25,909 : 
+
+
+ test score in the beginning is [28.28794  15.116698 10.956318 11.275575]
+2020-11-30 19:58:25,910 : -----------24-----------
+2020-11-30 20:01:15,613 : epoch 24 cur loss 16.47
+2020-11-30 20:04:07,477 : epoch 24 cur loss 16.30
+2020-11-30 20:06:57,284 : epoch 24 cur loss 16.34
+2020-11-30 20:08:36,422 : epoch 24 is endding, the epoch training loss is : 16.38, time cost is 610.51
+2020-11-30 20:10:32,508 : 
+
+
+ test score in the beginning is [28.128693 15.138501 10.946898 11.276267]
+2020-11-30 20:10:33,328 : /scratch/AS_data/finetuneInput_Trust0.1/month_01.npy>>>>> input file save successful！
+2020-12-01 03:18:46,515 : training data is loading
+2020-12-01 03:19:23,705 : training data load successful
+2020-12-01 03:19:23,706 : 720
+2020-12-01 03:19:23,706 : [1 2 4 5 6]
+2020-12-01 03:19:26,151 : -----------0-----------
+2020-12-01 03:22:11,505 : epoch 0 cur loss 22.37
+2020-12-01 03:24:57,471 : epoch 0 cur loss 22.51
+2020-12-01 03:27:42,866 : epoch 0 cur loss 22.41
+2020-12-01 03:29:15,527 : epoch 0 is endding, the epoch training loss is : 22.43, time cost is 589.38
+2020-12-01 03:30:55,147 : 
+
+
+ test score in the beginning is [40.71685  21.101099 13.488344 14.167119]
+2020-12-01 03:30:55,764 : /scratch/AS_data/finetuneInput_Trust0.1/month_01.npy>>>>> input file save successful！
+2020-12-01 03:30:55,764 : -----------1-----------
+2020-12-01 03:33:43,829 : epoch 1 cur loss 22.35
+2020-12-01 03:36:32,260 : epoch 1 cur loss 22.68
+2020-12-01 03:39:17,831 : epoch 1 cur loss 22.41
+2020-12-01 03:40:50,334 : epoch 1 is endding, the epoch training loss is : 22.42, time cost is 594.57
+2020-12-01 03:42:29,620 : 
+
+
+ test score in the beginning is [40.935722  21.07077   13.5568285 14.28671  ]
+2020-12-01 03:42:29,621 : -----------2-----------
+2020-12-01 07:37:11,743 : training data is loading
+2020-12-01 07:37:39,083 : training data load successful
+2020-12-01 07:37:39,083 : 2859
+2020-12-01 07:37:39,084 : [1 2 4 5 6]
+2020-12-01 07:40:42,914 : 
+
+
+ test score in the beginning is [30.367853 16.329952 10.597589  7.722247]
+2020-12-01 07:40:42,915 : -----------0-----------
+2020-12-01 07:43:10,981 : epoch 0 cur loss 16.06
+2020-12-01 07:45:37,761 : epoch 0 cur loss 16.22
+2020-12-01 07:48:03,393 : epoch 0 cur loss 16.33
+2020-12-01 07:50:29,087 : epoch 0 cur loss 16.47
+2020-12-01 07:52:55,209 : epoch 0 cur loss 16.44
+2020-12-01 07:55:20,991 : epoch 0 cur loss 16.34
+2020-12-01 07:57:47,032 : epoch 0 cur loss 16.27
+2020-12-01 08:00:13,161 : epoch 0 cur loss 16.32
+2020-12-01 08:02:41,659 : epoch 0 cur loss 16.26
+2020-12-01 08:05:10,154 : epoch 0 cur loss 16.24
+2020-12-01 08:07:38,592 : epoch 0 cur loss 16.22
+2020-12-01 08:10:08,060 : epoch 0 cur loss 16.22
+2020-12-01 08:12:38,305 : epoch 0 cur loss 16.24
+2020-12-01 08:15:04,807 : epoch 0 cur loss 16.26
+2020-12-01 08:21:20,669 : 
+
+
+ test score in the beginning is [30.388699 16.321583 10.611535  7.729971]
+2020-12-01 08:24:00,338 : /scratch/AS_data/finetuneInput_Trust0.1/month_01.npy>>>>> input file save successful！
